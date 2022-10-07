@@ -144,11 +144,9 @@ load_form = st.form('Show Calculations')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
-	st.write('Getting Google Sheet...')
+	st.subheader('Prepping Calcs...')
+	st.write('Retrieving Player Picks...')
 	picks_dict = get_sheets_info()
-	st.write('Picks Info...')
-	st.write(picks_dict)
-	st.write('Generated Player Picks...')
 
 	# st.write('Getting team info...')
 	# get_teams_info()
@@ -161,9 +159,14 @@ if go_button:
 	for week in range(1, curr_week+1):
 		weekly_results = get_week_games(week)
 		weekly_results_dict[week] = weekly_results
-	# st.write(weekly_results_dict)
 
-	st.write('Gathered all info...')
+	st.subheader('Starting Calculations...')
 	st.write('Calculating player totals...')
 	scores_df = calculate_player_totals()
+
+	st.write('Weekly Scores...')
 	st.write(scores_df.T)
+
+	st.write('Player Totals...')
+	for player in picks_dict:
+		st.write(f'{player}: {scores_df[player].sum}')
