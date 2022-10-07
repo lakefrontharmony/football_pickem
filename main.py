@@ -21,6 +21,13 @@ today_date = datetime.today()
 ###################################
 # Functions
 ###################################
+def find_matching_users(in_row: str, in_df: pd.DataFrame):
+	team_mask = in_df.loc(in_df['Team'] == in_row)
+	team_names = in_df.loc(team_mask)
+	st.write(f'matching names for team {in_row}...')
+	st.write(team_names)
+
+
 def get_sheets_info():
 	# Get football teams and create dictionary
 	football_teams_df = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
@@ -34,6 +41,7 @@ def get_sheets_info():
 	picks_df = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
 	# Create teams dictionary
 	team_names = picks_df['Team'].unique()
+	team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
 	st.write('Team Names...')
 	st.write(team_names)
 	picks_dict = picks_df.set_index('Name').T.to_dict('list')
