@@ -139,7 +139,7 @@ def calculate_player_totals() -> pd.DataFrame:
 # TODO: Figure out why this isn't returning anything
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
-	return_df['Totals'] = 0
+	return_df['Totals'] = [0]
 	for team in teams_dict:
 		team_total = 0
 		st.write('Team_dict:')
