@@ -28,7 +28,7 @@ def get_sheets_info():
 	st.write(teams_dict)
 
 	picks_df = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
-	picks_dict = teams_df.set_index('Name').T.to_dict('list')
+	picks_dict = picks_df.set_index('Name').T.to_dict('list')
 	st.write('Picks Info...')
 	st.write(picks_dict)
 
