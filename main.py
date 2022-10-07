@@ -16,6 +16,7 @@ picks_dict = dict()
 teams_dict = dict()
 weekly_results_dict = dict()
 picks_df = pd.DataFrame()
+scores_df = pd.DataFrame()
 today_date = datetime.today()
 
 
@@ -113,7 +114,7 @@ def get_week_games(in_week_num: int) -> dict:
 
 
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
-def calculate_player_totals():
+def calculate_player_totals() -> pd.DataFrame:
 	return_dict = pd.DataFrame()
 	return_dict['Week'] = range(1, 19)
 	return_dict.set_index('Week')
@@ -128,11 +129,11 @@ def calculate_player_totals():
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
-						return_dict.at[week_num, player] = 1
+						return_dict.at[week_num-1, player] = 1
 					else:
-						return_dict.at[week_num, player] = 0
+						return_dict.at[week_num-1, player] = 0
 		# return_dict[player] = results_array
-	st.write(return_dict)
+	return return_dict
 
 
 ###################################
@@ -160,8 +161,9 @@ if go_button:
 	for week in range(1, curr_week+1):
 		weekly_results = get_week_games(week)
 		weekly_results_dict[week] = weekly_results
-	st.write(weekly_results_dict)
+	# st.write(weekly_results_dict)
 
 	st.write('Gathered all info...')
 	st.write('Calculating player totals...')
-	calculate_player_totals()
+	scores_df = calculate_player_totals()
+	st.write(scores_df.T)
