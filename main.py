@@ -24,8 +24,13 @@ def get_sheets_info():
 	teams_temp_dict = teams_df.set_index('TeamUID').T.to_dict('list')
 	for uid in teams_temp_dict:
 		teams_dict[uid] = teams_temp_dict[uid][0]
+	st.write('Team Info...')
 	st.write(teams_dict)
 
+	picks_df = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
+	picks_dict = teams_df.set_index('Name').T.to_dict('list')
+	st.write('Picks Info...')
+	st.write(picks_dict)
 
 def get_teams_info():
 	response = requests.get(team_list_url)
