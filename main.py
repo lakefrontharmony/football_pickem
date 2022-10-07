@@ -69,7 +69,7 @@ def get_sheets_info():
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
 	st.write('Generated Teams...')
-	picks_df.drop(columns=['Team'])
+	picks_df.drop(columns=['Team'], inplace=True)
 	picks_dict = picks_df.set_index('Name').T.to_dict('list')
 
 	st.write('Picks Info...')
