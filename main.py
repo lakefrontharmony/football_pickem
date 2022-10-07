@@ -115,7 +115,7 @@ def get_week_games(in_week_num: int) -> dict:
 def calculate_player_totals():
 	week_num = 1
 	for player in picks_dict:
-		st.write(player)
+		st.write(picks_dict[player])
 
 
 ###################################
