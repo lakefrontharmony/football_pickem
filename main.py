@@ -1,3 +1,5 @@
+from typing import Union
+
 import numpy as np
 import requests
 import json
@@ -6,6 +8,9 @@ import pandas as pd
 import streamlit as st
 
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
+from pandas import DataFrame
+from pandas.io.parsers import TextFileReader
+
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
 season_url = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022?lang=en&region=us'
 week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/types/2/weeks/'
@@ -16,7 +21,7 @@ football_teams_dict = dict()
 picks_dict = dict()
 teams_dict = dict()
 weekly_results_dict = dict()
-picks_df = pd.Dataframe()
+picks_df = pd.DataFrame()
 today_date = datetime.today()
 
 
@@ -40,15 +45,36 @@ def get_sheets_info():
 	st.write(football_teams_dict)
 
 	# Get player weekly picks info
-	picks_df = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
+	picks_sheet = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
+	# Had a random problem with the picks_sheet, so I brute-force converted it to picks_df
+	picks_df['Name'] = picks_sheet['Name']
+	picks_df['Team'] = picks_sheet['Team']
+	picks_df['Week 1'] = picks_sheet['Week 1']
+	picks_df['Week 2'] = picks_sheet['Week 2']
+	picks_df['Week 3'] = picks_sheet['Week 3']
+	picks_df['Week 4'] = picks_sheet['Week 4']
+	picks_df['Week 5'] = picks_sheet['Week 5']
+	picks_df['Week 6'] = picks_sheet['Week 6']
+	picks_df['Week 7'] = picks_sheet['Week 7']
+	picks_df['Week 8'] = picks_sheet['Week 8']
+	picks_df['Week 9'] = picks_sheet['Week 9']
+	picks_df['Week 10'] = picks_sheet['Week 10']
+	picks_df['Week 11'] = picks_sheet['Week 11']
+	picks_df['Week 12'] = picks_sheet['Week 12']
+	picks_df['Week 13'] = picks_sheet['Week 13']
+	picks_df['Week 14'] = picks_sheet['Week 14']
+	picks_df['Week 15'] = picks_sheet['Week 15']
+	picks_df['Week 16'] = picks_sheet['Week 16']
+	picks_df['Week 17'] = picks_sheet['Week 17']
+	picks_df['Week 18'] = picks_sheet['Week 18']
 	# Create teams dictionary
 	team_names = picks_df['Team'].unique()
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
 	# team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
-	st.write('Team Names...')
-	st.write(team_names)
-	picks_dict = picks_df.set_index('Name').T.to_dict('list')
+	# st.write('Team Names...')
+	# st.write(team_names)
+	# picks_dict = picks_df.set_index('Name').T.to_dict('list')
 	# st.write('Picks Info...')
 	# st.write(picks_dict)
 
