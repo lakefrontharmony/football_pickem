@@ -115,10 +115,10 @@ def get_week_games(in_week_num: int) -> dict:
 
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
 def calculate_player_totals() -> pd.DataFrame:
-	return_dict = pd.DataFrame()
-	return_dict['Week'] = range(1, 19)
+	return_df = pd.DataFrame()
+	return_df['Week'] = range(1, 19)
 	for player in picks_dict:
-		return_dict[player] = 0
+		return_df[player] = 0
 		results_array = []
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
@@ -128,16 +128,16 @@ def calculate_player_totals() -> pd.DataFrame:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
-						return_dict.at[week_num-1, player] = 1
+						return_df.at[week_num-1, player] = 1
 					else:
-						return_dict.at[week_num-1, player] = 0
+						return_df.at[week_num-1, player] = 0
 		# return_dict[player] = results_array
-	return_dict.drop(columns=['Week'], inplace=True)
-	return return_dict
+	return_df.drop(columns=['Week'], inplace=True)
+	return return_df
 
 
 def calc_team_totals() -> pd.DataFrame:
-	return_df = pd.DataFrame
+	return_df = pd.DataFrame()
 	for team in teams_dict:
 		team_total = 0
 		for team_player in teams_dict[team]:
