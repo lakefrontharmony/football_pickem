@@ -29,7 +29,7 @@ def find_matching_users(in_row: str):
 	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc[team_mask]
 	st.write(f'matching names for team {in_row}...')
-	test = team_names['Name'].T
+	test = team_names['Name'].to_numpy()
 	st.write(test)
 
 
@@ -39,8 +39,8 @@ def get_sheets_info():
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
 	for uid in teams_temp_dict:
 		football_teams_dict[uid] = teams_temp_dict[uid][0]
-	st.write('Team Info...')
-	st.write(football_teams_dict)
+	# st.write('Team Info...')
+	# st.write(football_teams_dict)
 
 	# Get player weekly picks info
 	picks_sheet = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
