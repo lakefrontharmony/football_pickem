@@ -121,7 +121,7 @@ def calculate_player_totals():
 			# Verify that the pick has been entered for this week
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
-				if week_results[week_pick] in week_results.keys():
+				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
 						st.write(f'{player} got a point for {week_pick} in week {week_num}')
 					else:
