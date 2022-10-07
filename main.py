@@ -5,9 +5,6 @@ import pandas as pd
 import streamlit as st
 
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
-from pandas import DataFrame
-from pandas.io.parsers import TextFileReader
-
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
 season_url = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022?lang=en&region=us'
 week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/types/2/weeks/'
@@ -30,7 +27,6 @@ def find_matching_users(in_row: str):
 	team_names = picks_df.loc[team_mask]
 	name_array = team_names['Name'].to_numpy()
 	teams_dict[in_row] = name_array
-
 
 
 def get_sheets_info():
@@ -74,6 +70,8 @@ def get_sheets_info():
 
 	st.write('Picks Info...')
 	st.write(picks_dict)
+	st.write('Generated Player Picks...')
+
 
 def get_teams_info():
 	response = requests.get(team_list_url)
@@ -89,7 +87,6 @@ def get_teams_info():
 			team_uid = team_object['uid']
 			team_name = team_object['displayName']
 			football_teams_dict[team_uid] = team_name
-			# print(f'COUNT:{team_counter}, UID="{team_uid}", NAME="{team_name}"')
 			team_counter += 1
 		link_counter += 1
 
@@ -121,12 +118,15 @@ def get_week_games(in_week_num: int) -> dict:
 	return results_dict
 
 
+def calculate_player_totals():
+	pass
+
+
 ###################################
 # Execution
 ###################################
-
 # Get all teams uid and name and store in to team dictionary
-load_form = st.form('Start Calcs')
+load_form = st.form('Show Calculations')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
@@ -137,12 +137,15 @@ if go_button:
 	# get_teams_info()
 
 	st.write('Getting current week...')
-	# curr_week = get_week_num()
+	curr_week = get_week_num()
 
 	st.write('Getting weekly info...')
 	# Cycle through each week and find the winners from each game
-	# for week in range(1, curr_week+1):
-	#	weekly_results = get_week_games(week)
-	#	weekly_results_dict[week] = weekly_results
-	#print(weekly_results_dict)
+	for week in range(1, curr_week+1):
+		weekly_results = get_week_games(week)
+		weekly_results_dict[week] = weekly_results
+	st.write(weekly_results_dict)
+
 	st.write('Gathered all info...')
+	st.write('Calculating player totals...')
+	calculate_player_totals()
