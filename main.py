@@ -1,6 +1,7 @@
 import requests
 from datetime import datetime
 import pandas as pd
+import streamlit as st
 
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
@@ -70,17 +71,18 @@ def get_week_games(in_week_num: int) -> dict:
 ###################################
 # Execution
 ###################################
+
 # Get all teams uid and name and store in to team dictionary
-print('Getting Google Sheet...')
+st.write('Getting Google Sheet...')
 get_sheets_info()
 
-print('Getting team info...')
+st.write('Getting team info...')
 get_teams_info()
 
-print('Getting current week...')
+st.write('Getting current week...')
 curr_week = get_week_num()
 
-print('Getting weekly info...')
+st.write('Getting weekly info...')
 # Cycle through each week and find the winners from each game
 for week in range(1, curr_week+1):
 	weekly_results = get_week_games(week)
