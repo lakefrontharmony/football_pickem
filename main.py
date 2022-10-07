@@ -7,7 +7,7 @@ import streamlit as st
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
 season_url = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022?lang=en&region=us'
 week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/types/2/weeks/'
-tracker_sheet_url = f'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet=WeeklyPicks'
+tracker_sheet_url = 'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet='
 tracker_sheet_team_info_tab_name = 'TeamInfo'
 tracker_sheet_weekly_picks_tab_name = 'WeeklyPicks'
 teams_dict = dict()
@@ -19,7 +19,8 @@ today_date = datetime.today()
 # Functions
 ###################################
 def get_sheets_info():
-	print(pd.read_csv(tracker_sheet_url))
+	teams_dict = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name).to_dict()
+	st.write(teams_dict)
 
 
 def get_teams_info():
@@ -80,8 +81,8 @@ if go_button:
 	st.write('Getting Google Sheet...')
 	get_sheets_info()
 
-	st.write('Getting team info...')
-	get_teams_info()
+	# st.write('Getting team info...')
+	# get_teams_info()
 
 	st.write('Getting current week...')
 	curr_week = get_week_num()
@@ -91,4 +92,5 @@ if go_button:
 	for week in range(1, curr_week+1):
 		weekly_results = get_week_games(week)
 		weeks_dict[week] = weekly_results
-	print(weeks_dict)
+	#print(weeks_dict)
+	st.write('Gathered all info...')
