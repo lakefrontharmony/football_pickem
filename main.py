@@ -136,13 +136,18 @@ def calculate_player_totals() -> pd.DataFrame:
 	return return_df
 
 
+# TODO: Figure out why this isn't returning anything
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	return_df['Totals'] = 0
 	for team in teams_dict:
 		team_total = 0
+		st.write('Team_dict:')
+		st.write(teams_dict)
+		st.write(f'Looking up totals for {team}')
 		for team_player in teams_dict[team]:
 			team_total += scores_df[team_player].sum()
+			st.write(f'got total for {team_player}:{scores_df[team_player].sum()}. new total:{team_total}')
 		return_df[team] = team_total
 	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
