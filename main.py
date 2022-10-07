@@ -114,7 +114,9 @@ def get_week_games(in_week_num: int) -> dict:
 
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
 def calculate_player_totals():
+	return_dict = pd.DataFrame()
 	for player in picks_dict:
+		results_array = []
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -123,10 +125,11 @@ def calculate_player_totals():
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
-						st.write(f'{player} got a point for {week_pick} in week {week_num}')
+						results_array.append(1)
 					else:
-						st.write(f'{player} failed with {week_pick} in week {week_num}')
-					# st.write(picks_dict[player])
+						results_array.append(0)
+		return_dict[player] = results_array
+	st.write(return_dict)
 
 
 ###################################
