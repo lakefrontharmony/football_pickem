@@ -122,7 +122,7 @@ def calculate_player_totals():
 					st.write(f'{player} got a point for {week_pick} in week {week_num}')
 				else:
 					st.write(f'{player} failed with {week_pick} in week {week_num}')
-				st.write(picks_dict[player])
+				# st.write(picks_dict[player])
 
 
 ###################################
