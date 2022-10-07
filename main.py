@@ -149,6 +149,7 @@ def calc_team_totals() -> pd.DataFrame:
 			team_total += scores_df[team_player].sum()
 			st.write(f'got total for {team_player}:{scores_df[team_player].sum()}. new total:{team_total}')
 		return_df[team] = team_total
+		st.write(f'Updated df: {return_df}')
 	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
 
@@ -182,11 +183,11 @@ if go_button:
 	scores_df = calculate_player_totals()
 
 	st.write('Weekly Scores...')
-	st.write(scores_df.T)
+	# st.write(scores_df.T)
 
-	st.write('Player Totals...')
-	for player in picks_dict:
-		st.write(f'{player} = {scores_df[player].sum()}')
+	# st.write('Player Totals...')
+	# for player in picks_dict:
+	# 	st.write(f'{player} = {scores_df[player].sum()}')
 
 	st.write('Team Totals...')
 	teams_totals = calc_team_totals()
