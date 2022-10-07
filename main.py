@@ -30,7 +30,7 @@ def find_matching_users(in_row: str):
 	team_names = picks_df.loc[team_mask]
 	st.write(f'matching names for team {in_row}...')
 	test = team_names['Name'].to_numpy()
-	st.write(test)
+	st.write(type(test))
 
 
 def get_sheets_info():
