@@ -117,9 +117,12 @@ def calculate_player_totals():
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
-			if week_results[week_pick] is True:
-				st.write(f'{player} got a point for {week_pick} in week {week_num}')
-		st.write(picks_dict[player])
+			if week_pick != "":
+				if week_results[week_pick] is True:
+					st.write(f'{player} got a point for {week_pick} in week {week_num}')
+				else:
+					st.write(f'{player} failed with {week_pick} in week {week_num}')
+				st.write(picks_dict[player])
 
 
 ###################################
