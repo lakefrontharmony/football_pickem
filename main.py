@@ -39,8 +39,6 @@ def get_sheets_info():
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
 	for uid in teams_temp_dict:
 		football_teams_dict[uid] = teams_temp_dict[uid][0]
-	# st.write('Team Info...')
-	# st.write(football_teams_dict)
 
 	# Get player weekly picks info
 	picks_sheet = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
@@ -65,16 +63,17 @@ def get_sheets_info():
 	picks_df['Week 16'] = picks_sheet['Week 16']
 	picks_df['Week 17'] = picks_sheet['Week 17']
 	picks_df['Week 18'] = picks_sheet['Week 18']
+
 	# Create teams dictionary
 	team_names = picks_df['Team'].unique()
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
-	# team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
-	st.write('Teams...')
-	st.write(teams_dict)
-	# picks_dict = picks_df.set_index('Name').T.to_dict('list')
-	# st.write('Picks Info...')
-	# st.write(picks_dict)
+	st.write('Generated Teams...')
+	picks_df.drop(columns=['Team'])
+	picks_dict = picks_df.set_index('Name').T.to_dict('list')
+
+	st.write('Picks Info...')
+	st.write(picks_dict)
 
 def get_teams_info():
 	response = requests.get(team_list_url)
