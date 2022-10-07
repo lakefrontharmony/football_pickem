@@ -73,18 +73,22 @@ def get_week_games(in_week_num: int) -> dict:
 ###################################
 
 # Get all teams uid and name and store in to team dictionary
-st.write('Getting Google Sheet...')
-get_sheets_info()
+load_form = st.form('Start Calcs')
+go_button = load_form.form_submit_button(label='Get info')
 
-st.write('Getting team info...')
-get_teams_info()
+if go_button:
+	st.write('Getting Google Sheet...')
+	get_sheets_info()
 
-st.write('Getting current week...')
-curr_week = get_week_num()
+	st.write('Getting team info...')
+	get_teams_info()
 
-st.write('Getting weekly info...')
-# Cycle through each week and find the winners from each game
-for week in range(1, curr_week+1):
-	weekly_results = get_week_games(week)
-	weeks_dict[week] = weekly_results
-print(weeks_dict)
+	st.write('Getting current week...')
+	curr_week = get_week_num()
+
+	st.write('Getting weekly info...')
+	# Cycle through each week and find the winners from each game
+	for week in range(1, curr_week+1):
+		weekly_results = get_week_games(week)
+		weeks_dict[week] = weekly_results
+	print(weeks_dict)
