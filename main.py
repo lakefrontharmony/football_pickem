@@ -1,3 +1,4 @@
+import numpy as np
 import requests
 import json
 from datetime import datetime
@@ -15,15 +16,16 @@ football_teams_dict = dict()
 picks_dict = dict()
 teams_dict = dict()
 weekly_results_dict = dict()
+picks_df = pd.Dataframe()
 today_date = datetime.today()
 
 
 ###################################
 # Functions
 ###################################
-def find_matching_users(in_row: str, in_df: pd.DataFrame):
-	team_mask = in_df.loc(in_df['Team'] == in_row)
-	team_names = in_df.loc(team_mask)
+def find_matching_users(in_row: str):
+	team_mask = picks_df.loc(picks_df['Team'] == in_row)
+	team_names = picks_df.loc(team_mask)
 	st.write(f'matching names for team {in_row}...')
 	st.write(team_names)
 
@@ -41,7 +43,9 @@ def get_sheets_info():
 	picks_df = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
 	# Create teams dictionary
 	team_names = picks_df['Team'].unique()
-	team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
+	vector_function = np.vectorize(find_matching_users)
+	vector_function(team_names)
+	# team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
 	st.write('Team Names...')
 	st.write(team_names)
 	picks_dict = picks_df.set_index('Name').T.to_dict('list')
