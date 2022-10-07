@@ -138,11 +138,13 @@ def calculate_player_totals() -> pd.DataFrame:
 
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
+	return_df['Totals'] = 0
 	for team in teams_dict:
 		team_total = 0
 		for team_player in teams_dict[team]:
 			team_total += scores_df[team_player].sum()
 		return_df[team] = team_total
+	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
 
 
@@ -183,4 +185,4 @@ if go_button:
 
 	st.write('Team Totals...')
 	teams_totals = calc_team_totals()
-	st.write(teams_totals)
+	st.write(teams_totals.T)
