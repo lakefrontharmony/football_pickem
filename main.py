@@ -115,6 +115,7 @@ def get_week_games(in_week_num: int) -> dict:
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
 def calculate_player_totals():
 	return_dict = pd.DataFrame()
+	return_dict['Week'] = range(1, 19)
 	for player in picks_dict:
 		results_array = []
 		for week_num in weekly_results_dict:
