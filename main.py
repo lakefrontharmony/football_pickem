@@ -29,8 +29,9 @@ def find_matching_users(in_row: str):
 	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc[team_mask]
 	st.write(f'matching names for team {in_row}...')
-	test = team_names['Name'].to_numpy()
-	st.write(type(test))
+	name_array = team_names['Name'].to_numpy()
+	teams_dict['in_row'] = name_array
+
 
 
 def get_sheets_info():
@@ -70,8 +71,8 @@ def get_sheets_info():
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
 	# team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
-	# st.write('Team Names...')
-	# st.write(team_names)
+	st.write('Teams...')
+	st.write(teams_dict)
 	# picks_dict = picks_df.set_index('Name').T.to_dict('list')
 	# st.write('Picks Info...')
 	# st.write(picks_dict)
