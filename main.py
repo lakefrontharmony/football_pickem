@@ -83,7 +83,7 @@ def get_teams_info():
 		team_link = team_list_url + '/' + str(link_counter)
 		team_response = requests.get(team_link)
 		team_object = team_response.json()
-		if team_object['isActive'] == True and team_object['isAllStar'] == False:
+		if team_object['isActive'] is True and team_object['isAllStar'] is False:
 			team_uid = team_object['uid']
 			team_name = team_object['displayName']
 			football_teams_dict[team_uid] = team_name
@@ -109,17 +109,17 @@ def get_week_games(in_week_num: int) -> dict:
 		event_link = week['$ref']
 		event_response = requests.get(event_link)
 		event_object = event_response.json()['competitions'][0]
-		event_uid = event_object['uid']
 		event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
 		if event_datetime < today_date:
-			print(f'Gathering event:{event_uid} for week {in_week_num}')
 			results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
 			results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
 	return results_dict
 
 
 def calculate_player_totals():
-	pass
+	week_num = 1
+	for player in picks_dict:
+		print(picks_dict[player])
 
 
 ###################################
