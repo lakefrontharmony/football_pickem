@@ -1,4 +1,5 @@
 import requests
+import json
 from datetime import datetime
 import pandas as pd
 import streamlit as st
@@ -19,7 +20,7 @@ today_date = datetime.today()
 # Functions
 ###################################
 def get_sheets_info():
-	teams_dict = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name).to_dict()
+	teams_dict = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
 	st.write(teams_dict)
 
 
@@ -85,12 +86,12 @@ if go_button:
 	# get_teams_info()
 
 	st.write('Getting current week...')
-	curr_week = get_week_num()
+	# curr_week = get_week_num()
 
 	st.write('Getting weekly info...')
 	# Cycle through each week and find the winners from each game
-	for week in range(1, curr_week+1):
-		weekly_results = get_week_games(week)
-		weeks_dict[week] = weekly_results
+	# for week in range(1, curr_week+1):
+	#	weekly_results = get_week_games(week)
+	#	weeks_dict[week] = weekly_results
 	#print(weeks_dict)
 	st.write('Gathered all info...')
