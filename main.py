@@ -1,8 +1,5 @@
-from typing import Union
-
 import numpy as np
 import requests
-import json
 from datetime import datetime
 import pandas as pd
 import streamlit as st
@@ -32,7 +29,7 @@ def find_matching_users(in_row: str):
 	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc[team_mask]
 	st.write(f'matching names for team {in_row}...')
-	st.write(team_names['Name'].T)
+	st.write(team_names['Name'].to_numpy().T)
 
 
 def get_sheets_info():
