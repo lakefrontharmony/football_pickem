@@ -7,7 +7,7 @@ import streamlit as st
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
 season_url = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022?lang=en&region=us'
 week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/types/2/weeks/'
-tracker_sheet_url = f'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet=TeamInfo'
+tracker_sheet_url = f'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet=WeeklyPicks'
 tracker_sheet_team_info_tab_name = 'TeamInfo'
 tracker_sheet_weekly_picks_tab_name = 'WeeklyPicks'
 teams_dict = dict()
