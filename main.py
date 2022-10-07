@@ -29,7 +29,7 @@ today_date = datetime.today()
 # Functions
 ###################################
 def find_matching_users(in_row: str):
-	team_mask = picks_df.loc(picks_df['Team'] == in_row)
+	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc(team_mask)
 	st.write(f'matching names for team {in_row}...')
 	st.write(team_names)
