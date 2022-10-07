@@ -21,8 +21,8 @@ today_date = datetime.today()
 ###################################
 def get_sheets_info():
 	teams_df = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
-	teams_df.set_index('TeamUID')
-	st.write(teams_df)
+	teams_dict = teams_df.set_index('TeamUID').T.to_dict('list')
+	st.write(teams_dict)
 
 
 def get_teams_info():
