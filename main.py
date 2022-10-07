@@ -130,7 +130,7 @@ def calculate_player_totals():
 						return_dict.at[week_num-1, player] = 1
 					else:
 						return_dict.at[week_num-1, player] = 0
-		return_dict[player] = results_array
+		# return_dict[player] = results_array
 	st.write(return_dict)
 
 
