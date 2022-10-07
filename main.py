@@ -29,7 +29,7 @@ def find_matching_users(in_row: str):
 	teams_dict[in_row] = name_array
 
 
-def get_sheets_info() -> pd.DataFrame:
+def get_sheets_info() -> dict:
 	# Get football teams and create dictionary
 	football_teams_df = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
@@ -113,8 +113,12 @@ def get_week_games(in_week_num: int) -> dict:
 
 
 def calculate_player_totals():
-	week_num = 1
 	for player in picks_dict:
+		for week_num in weekly_results_dict:
+			week_results = weekly_results_dict[week_num]
+			week_pick = picks_dict[player][week_num-1]
+			if week_results[week_pick] is True:
+				st.write(f'{player} got a point for {week_pick} in week {week_num}')
 		st.write(picks_dict[player])
 
 
