@@ -169,4 +169,4 @@ if go_button:
 
 	st.write('Player Totals...')
 	for player in picks_dict:
-		st.write(f'{player}: {scores_df[player].sum}')
+		st.write(f'{player}: {scores_df[player].sum()}')
