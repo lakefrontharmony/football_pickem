@@ -116,6 +116,7 @@ def get_week_games(in_week_num: int) -> dict:
 def calculate_player_totals():
 	return_dict = pd.DataFrame()
 	return_dict['Week'] = range(1, 19)
+	return_dict.set_index('Week')
 	for player in picks_dict:
 		return_dict[player] = 0
 		results_array = []
@@ -127,9 +128,9 @@ def calculate_player_totals():
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
-						return_dict.at[week_num-1, player] = 1
+						return_dict.at[week_num, player] = 1
 					else:
-						return_dict.at[week_num-1, player] = 0
+						return_dict.at[week_num, player] = 0
 		# return_dict[player] = results_array
 	st.write(return_dict)
 
