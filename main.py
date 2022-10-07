@@ -70,7 +70,7 @@ def get_sheets_info():
 	# Create teams dictionary
 	team_names = picks_df['Team'].unique()
 	vector_function = np.vectorize(find_matching_users)
-	vector_function(team_names.to_numpy())
+	vector_function(team_names)
 	# team_names.apply(lambda row: find_matching_users(row, picks_df), axis=1)
 	# st.write('Team Names...')
 	# st.write(team_names)
