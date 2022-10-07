@@ -183,10 +183,10 @@ if go_button:
 		weekly_results_dict[week] = weekly_results
 
 	st.subheader('Starting Calculations...')
-	st.write('Calculating player totals...')
+	st.write('Calculating totals...')
 	scores_df = calculate_player_totals()
 
-	st.write('Weekly Scores...')
+	st.write('Weekly Points...')
 	st.write(scores_df.T)
 
 	st.write('Player Totals...')
