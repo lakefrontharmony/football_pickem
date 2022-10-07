@@ -112,17 +112,21 @@ def get_week_games(in_week_num: int) -> dict:
 	return results_dict
 
 
+# Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
 def calculate_player_totals():
 	for player in picks_dict:
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
+			# Verify that the pick has been entered for this week
 			if type(week_pick) == str:
-				if week_results[week_pick] is True:
-					st.write(f'{player} got a point for {week_pick} in week {week_num}')
-				else:
-					st.write(f'{player} failed with {week_pick} in week {week_num}')
-				# st.write(picks_dict[player])
+				# Verify that the results of the game for that week exist
+				if week_results[week_pick] in week_results.keys():
+					if week_results[week_pick] is True:
+						st.write(f'{player} got a point for {week_pick} in week {week_num}')
+					else:
+						st.write(f'{player} failed with {week_pick} in week {week_num}')
+					# st.write(picks_dict[player])
 
 
 ###################################
