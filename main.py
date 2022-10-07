@@ -29,7 +29,7 @@ def find_matching_users(in_row: str):
 	teams_dict[in_row] = name_array
 
 
-def get_sheets_info():
+def get_sheets_info() -> pd.DataFrame:
 	# Get football teams and create dictionary
 	football_teams_df = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
@@ -66,11 +66,7 @@ def get_sheets_info():
 	vector_function(team_names)
 	st.write('Generated Teams...')
 	picks_df.drop(columns=['Team'], inplace=True)
-	picks_dict = picks_df.set_index('Name').T.to_dict('list')
-
-	st.write('Picks Info...')
-	st.write(picks_dict)
-	st.write('Generated Player Picks...')
+	return picks_df.set_index('Name').T.to_dict('list')
 
 
 def get_teams_info():
@@ -131,7 +127,10 @@ go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	st.write('Getting Google Sheet...')
-	get_sheets_info()
+	picks_dict = get_sheets_info()
+	st.write('Picks Info...')
+	st.write(picks_dict)
+	st.write('Generated Player Picks...')
 
 	# st.write('Getting team info...')
 	# get_teams_info()
