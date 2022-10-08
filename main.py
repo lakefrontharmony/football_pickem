@@ -121,7 +121,7 @@ def calculate_player_totals() -> pd.DataFrame:
 	display_df['Week'] = range(1, 19)
 	for player in picks_dict:
 		return_df[player] = 0
-		display_df[player] = ""
+		display_df[player] = " "
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -135,7 +135,7 @@ def calculate_player_totals() -> pd.DataFrame:
 					else:
 						return_df.at[week_num-1, player] = 0
 						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
-	return_df.drop(columns=['Week'], inplace=True)
+	# return_df.drop(columns=['Week'], inplace=True)
 	return return_df
 
 
