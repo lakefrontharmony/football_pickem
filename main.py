@@ -17,6 +17,7 @@ teams_dict = dict()
 weekly_results_dict = dict()
 picks_df = pd.DataFrame()
 scores_df = pd.DataFrame()
+display_df = pd.DataFrame()
 today_date = datetime.today()
 
 
@@ -91,8 +92,8 @@ def get_teams_info():
 def get_week_num() -> int:
 	response = requests.get(season_url)
 	season = response.json()
-	curr_week = season['type']['week']['number']
-	return curr_week
+	week_num = season['type']['week']['number']
+	return week_num
 
 
 def get_week_games(in_week_num: int) -> dict:
@@ -117,9 +118,10 @@ def get_week_games(in_week_num: int) -> dict:
 def calculate_player_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	return_df['Week'] = range(1, 19)
+	display_df['Week'] = range(1, 19)
 	for player in picks_dict:
 		return_df[player] = 0
-		results_array = []
+		display_df[player] = ""
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -129,9 +131,10 @@ def calculate_player_totals() -> pd.DataFrame:
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
+						display_df.at[week_num-1, player] = f'{football_teams_dict[week_pick]} - WIN'
 					else:
 						return_df.at[week_num-1, player] = 0
-		# return_dict[player] = results_array
+						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
 	return_df.drop(columns=['Week'], inplace=True)
 	return return_df
 
@@ -191,6 +194,7 @@ if go_button:
 
 	st.write('Player Totals...')
 	player_totals = calc_player_totals()
+	st.write(display_df.T)
 	st.write(player_totals.T)
 
 	st.write('Team Totals...')
