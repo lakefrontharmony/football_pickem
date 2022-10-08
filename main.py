@@ -167,8 +167,8 @@ def calc_team_totals() -> pd.DataFrame:
 # Execution
 ###################################
 # Get all teams uid and name and store in to team dictionary
-load_form = st.form('Show Calculations')
-go_button = load_form.form_submit_button(label='Get info')
+# load_form = st.form('Show Calculations')
+# go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	st.header('Prepping Calcs...')
