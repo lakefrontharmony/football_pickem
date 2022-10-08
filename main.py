@@ -171,36 +171,36 @@ load_form = st.form('Show Calculations')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
-	st.subheader('Prepping Calcs...')
+	st.header('Prepping Calcs...')
 	st.write('Retrieving Player Picks...')
 	picks_dict = get_sheets_info()
-
+	# Retrieve team info from API's (less efficient than getting from Google Sheet
 	# st.write('Getting team info...')
 	# get_teams_info()
-
 	st.write('Getting current week...')
 	curr_week = get_week_num()
-
 	st.write('Getting weekly info...')
 	# Cycle through each week and find the winners from each game
 	for week in range(1, curr_week+1):
 		weekly_results = get_week_games(week)
 		weekly_results_dict[week] = weekly_results
 
-	st.subheader('Starting Calculations...')
+	st.header('Starting Calculations...')
 	st.write('Calculating totals...')
 	scores_df = calculate_player_totals()
+	st.write('Calculations finished...')
 
+	st.subheader('Results')
 	player_totals = calc_player_totals()
 	st.write('Weekly Picks')
 	st.write(display_df.astype(str).T)
 
-	st.write('Weekly Points...')
+	st.subheader('Weekly Points')
 	st.write(scores_df.T)
 
-	st.write('Player Totals...')
+	st.subheader('Player Totals')
 	st.write(player_totals.T)
 
-	st.write('Team Totals...')
+	st.subheader('Team Totals')
 	teams_totals = calc_team_totals()
 	st.write(teams_totals.T)
