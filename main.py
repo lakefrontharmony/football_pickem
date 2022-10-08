@@ -131,9 +131,11 @@ def calculate_player_totals() -> pd.DataFrame:
 				if week_pick in week_results.keys():
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
+						display_df[player] = display_df[player].astype(str)
 						display_df.at[week_num-1, player] = f'{football_teams_dict[week_pick]} - WIN'
 					else:
 						return_df.at[week_num-1, player] = 0
+						display_df[player] = display_df[player].astype(str)
 						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
 	# return_df.drop(columns=['Week'], inplace=True)
 	return return_df
