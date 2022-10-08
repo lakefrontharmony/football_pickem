@@ -192,6 +192,7 @@ scores_df = calculate_player_totals()
 st.write('Calculations finished...')
 
 st.subheader('Results')
+st.write('Use the "View Fullscreen" buttons to the left of each table to expand your view')
 player_totals = calc_player_totals()
 st.subheader('Weekly Picks')
 st.write(display_df.astype(str).T)
