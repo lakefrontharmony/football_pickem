@@ -192,15 +192,12 @@ if go_button:
 
 	st.subheader('Results')
 	player_totals = calc_player_totals()
-	st.write('Weekly Picks')
+	st.subheader('Weekly Picks')
 	st.write(display_df.astype(str).T)
-
 	st.subheader('Weekly Points')
 	st.write(scores_df.T)
-
 	st.subheader('Player Totals')
 	st.write(player_totals.T)
-
 	st.subheader('Team Totals')
 	teams_totals = calc_team_totals()
 	st.write(teams_totals.T)
