@@ -167,6 +167,7 @@ def calc_team_totals() -> pd.DataFrame:
 ###################################
 # Execution
 ###################################
+st.title("Football Pick'em Tracker")
 # Get all teams uid and name and store in to team dictionary
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
