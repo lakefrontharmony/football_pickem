@@ -189,8 +189,8 @@ load_form.write('Click the button below to see picks and weekly results')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
-	with st.expander('Prepping Calcs...', expanded=True):
-		# st.header('Prepping Calcs...')
+	with st.expander('DATA BUILD', expanded=True):
+		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		picks_dict = get_sheets_info()
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
