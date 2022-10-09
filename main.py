@@ -3,8 +3,6 @@ import requests
 from datetime import datetime
 import pandas as pd
 import streamlit as st
-import gspread
-import df2gspread as d2g
 
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
@@ -26,15 +24,6 @@ today_date = datetime.today()
 ###################################
 # Functions
 ###################################
-def authorize_with_google():
-	gc = gspread.service_account(filename='/footballpickemcalculator.json')
-
-	spreadsheet_name = 'FootballPickEmTracking'
-	wks_name = 'Testing'
-	sh = gc.open(spreadsheet_name)
-
-
-
 def find_matching_users(in_row: str):
 	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc[team_mask]
@@ -214,5 +203,3 @@ if go_button:
 	st.subheader('Team Totals')
 	teams_totals = calc_team_totals()
 	st.write(teams_totals.T)
-
-	authorize_with_google()
