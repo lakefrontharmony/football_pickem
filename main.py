@@ -171,8 +171,8 @@ def calc_team_totals() -> pd.DataFrame:
 		team_total = 0
 		for team_player in teams_dict[team]:
 			team_total += scores_df[team_player].sum()
-		return_df.at[0, team] = int(team_total)
-		# return_df[team] = return_df[team].astype(int)
+		return_df.at[0, team] = team_total
+		return_df[team] = return_df[team].astype(int)
 	# Drop the dummy column
 	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
