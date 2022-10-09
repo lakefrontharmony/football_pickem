@@ -27,7 +27,7 @@ today_date = datetime.today()
 # Functions
 ###################################
 def authorize_with_google():
-	gc = gspread.service_account()
+	gc = gspread.service_account(filename='footballpickemcalculator.json')
 
 	spreadsheet_name = 'FootballPickEmTracking'
 	wks_name = 'Testing'
