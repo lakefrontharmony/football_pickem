@@ -108,8 +108,9 @@ def get_week_games(in_week_num: int) -> dict:
 		event_object = event_response.json()['competitions'][0]
 		event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
 		if event_datetime < today_date:
-			results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
-			results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
+			if 'winner' in event_object['competitors'][0].keys():
+				results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
+				results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
 	return results_dict
 
 
