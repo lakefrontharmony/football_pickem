@@ -29,9 +29,9 @@ today_date = datetime.today()
 def authorize_with_google():
 	gc = gspread.service_account()
 
-	spreadsheet_key = '1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ'
+	spreadsheet_name = 'FootballPickEmTracking'
 	wks_name = 'Testing'
-	sh = gc.open(spreadsheet_key)
+	sh = gc.open(spreadsheet_name)
 
 
 
