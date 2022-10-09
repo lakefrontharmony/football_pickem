@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "footballpickemcalculator",
+  "private_key_id": "4797498d32e1d50841be33d81559aa650147870d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC/8totnI06kBHy\nCeR8uI6ApWD2ztT4UbHZrHwQ/LrOyLGx9/O0gLByUCLSu1CqGRag8BeFyHudGRnU\n8j3VWc0d+A0v3uOaU5AEvZvWWroDc+AIh5kl6Mg/QknzmnCNaPxl5nLYYhSwwwoK\nk7bmjotNH2gZ/OKzV1OZLewuV2vzTqryiUbyFOCyXh2k7Moj4tGF3Cj2csSWRVHn\n5oUa1aAaSqtOYoMGwouyt/YbEC6pecyOZEIvbaJvDdOegcDn9+M1nuSpPSYPIKxJ\ncZ6owRHglwP98HaQmqcDxBUNTolyPBFrHjMA38yzdJpQm1k6rD4tFCCYZayGOiZa\ni20hA0NnAgMBAAECggEAQ6aaEt1MQUmpqX6nEvYQ83JWHGaFVQemASvzhiEszdia\nGDlloUaB6agovdDa+zhga1RzVel098dy/URrWpiN3HQiYa7S1P+CkMkq9X+Ac9sR\nKLBx35SNjw4T9lGGPbC01E1GSNE4rZvwHA43tkai/gmFrTMdy0uJ4UD4LtUM7PE9\nrLAZajnT4lSAByeKnp6+5GhIvb4geVIYbTAxdoNeP+dqesBM9bu0WC3rD0PDgjM2\nBAPlvdhBYlTVtWGmcMQkQeWTCDsXlljU2Y9//P8JCcbJRTZB2Qdm8VnlAm1c+nXu\nXUISfX7jqAcNzn+8bgunB40+X51cGLPdSWrMAR2OEQKBgQD442VbERxjbR2GXEao\nGg/e5a1zshO5mQla9/FY5AU8/Qi3JNkAE8C+D1wdmZh0MG2s41dl2GldN6To7chs\no7OLo6xgvqIFi6bYDziSPm/d352Efhsu6+uXKQGSYkfSi4yboAcSxQeIPOGnlfzN\n3hnz0ymhFG+j3oZxHhwAw3SupQKBgQDFbvIzc1gMLPnPQgD5NL7IHrICXJE/WjdP\n/N+1WZV7hw/JchnzfN/0TDKO4MCDrYeLQBkkwq3Ucwj65D7tm/7FwktNvm1J8ubf\n4fPIjvJrTM7Q6qiJSTYZnx9zQkN6rUlUjXwpytM5Dznt/YXL3knWshdMGh6OpoFj\n6logtmH4GwKBgQCQ9/rIgX30l9DzuvnY3l1SKpvOYPJGT9J4LyVf7mjyrjwOWSMg\nfWDuE4pHH3kCbFbltgHpK5Wrm0at+hqc1Pk2o946967t5fsHrE36OO314VMhokZ5\nHSe7g0IMHrzQ8UG0QBD+qM8LVtLlR2LaEr0xHVUJIxsn6uyKJMyQ0Ug8lQKBgQC4\nx9qk7so0Mw/mu5afpo78S0Y9UZebXHsyQLC7UUnHYCQVXNYO/gu44GvdL1reotWe\nLXKa5h29HaEE+AQxbHOpcOv7qkMtF8qfNSFtzuPyKuPRwh3Ux5F7r2LHA/iV44Mj\nQHw5vRutZqPIKyRDJxuidfG6ByQcTJgDBH4v6aKNiwKBgCHIChMdNUhoxkpS9Tq2\nIPbel3BVU9GEgDT5EibpzWgzUjnsMu9DJNyK6LZK0AoL6kJeZYMw9DV7w3TmUKJV\nLwOMTeP0jUYuC5Ij19gL6gPD+JFgSlJYvjukWUzf6nTg2hDzvrFCdR+c2vJaprxW\n7W0ETExU77CSZsbnPemxp6qI\n-----END PRIVATE KEY-----\n",
+  "client_email": "footballpickem@footballpickemcalculator.iam.gserviceaccount.com",
+  "client_id": "108077998015592343056",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/footballpickem%40footballpickemcalculator.iam.gserviceaccount.com"
+}
