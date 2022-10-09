@@ -4,10 +4,15 @@ from datetime import datetime
 import pandas as pd
 import streamlit as st
 
+###################################
+# Variables
+###################################
+# Scoreboard link shows the real-time status of this week's games.
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
 season_url = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022?lang=en&region=us'
 week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/types/2/weeks/'
+week_events_url_end = '/events?lang=en&region=us'
 tracker_sheet_url = 'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet='
 tracker_sheet_team_info_tab_name = 'TeamInfo'
 tracker_sheet_weekly_picks_tab_name = 'WeeklyPicks'
@@ -24,6 +29,7 @@ today_date = datetime.today()
 ###################################
 # Functions
 ###################################
+# Find teams in the picks_df which match the input string and add to the teams dictionary
 def find_matching_users(in_row: str):
 	team_mask = picks_df['Team'] == in_row
 	team_names = picks_df.loc[team_mask]
@@ -31,6 +37,7 @@ def find_matching_users(in_row: str):
 	teams_dict[in_row] = name_array
 
 
+# Get team info and player pick info from Google Sheets.
 def get_sheets_info() -> dict:
 	# Get football teams and create dictionary
 	football_teams_df = pd.read_csv(tracker_sheet_url + tracker_sheet_team_info_tab_name)
@@ -70,6 +77,7 @@ def get_sheets_info() -> dict:
 	return picks_df.set_index('Name').T.to_dict('list')
 
 
+# Retrieve Football team info from API
 def get_teams_info():
 	response = requests.get(team_list_url)
 	all_teams = response.json()
@@ -88,6 +96,7 @@ def get_teams_info():
 		link_counter += 1
 
 
+# Lookup the current week number through API
 def get_week_num() -> int:
 	response = requests.get(season_url)
 	season = response.json()
@@ -95,10 +104,10 @@ def get_week_num() -> int:
 	return week_num
 
 
+# Cycle through the games in a given week to store the winners/losers information.
 def get_week_games(in_week_num: int) -> dict:
 	results_dict = dict()
 	week_num = str(in_week_num)
-	week_events_url_end = '/events?lang=en&region=us'
 	week_events_url = week_events_url_start + week_num + week_events_url_end
 	week_response = requests.get(week_events_url)
 	all_weeks = week_response.json()
@@ -115,7 +124,7 @@ def get_week_games(in_week_num: int) -> dict:
 
 
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
-def calculate_player_totals() -> pd.DataFrame:
+def calculate_player_results() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	return_df['Week'] = range(1, 19)
 	display_df['Week'] = range(1, 19)
@@ -138,28 +147,33 @@ def calculate_player_totals() -> pd.DataFrame:
 						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
 				else:
 					display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]}'
-	# return_df.drop(columns=['Week'], inplace=True)
 	return return_df
 
 
+# Sum the totals for each player from all weeks.
 def calc_player_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
+	# This is a dummy column to force the shape of the Dataframe (brute force)
 	return_df['Totals'] = range(0, 1)
 	for player in picks_dict:
 		return_df[player] = scores_df[player].sum()
+	# Drop the dummy column
 	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
 
 
+# Sum the totals for each team of players (not Football teams).
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
+	# This is a dummy column to force the shape of the Dataframe (brute force)
 	return_df['Totals'] = range(0, 1)
 	for team in teams_dict:
 		team_total = 0
 		for team_player in teams_dict[team]:
 			team_total += scores_df[team_player].sum()
 		return_df.at[0, team] = int(team_total)
-		return_df[team] = return_df[team].astype(int)
+		# return_df[team] = return_df[team].astype(int)
+	# Drop the dummy column
 	return_df.drop(columns=['Totals'], inplace=True)
 	return return_df
 
@@ -168,6 +182,7 @@ def calc_team_totals() -> pd.DataFrame:
 # Execution
 ###################################
 st.title("Football Pick'em Tracker")
+
 # Get all teams uid and name and store in to team dictionary
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
@@ -177,7 +192,7 @@ if go_button:
 	st.header('Prepping Calcs...')
 	st.write('Retrieving Player Picks...')
 	picks_dict = get_sheets_info()
-	# Retrieve team info from API's (less efficient than getting from Google Sheet
+	# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
 	# st.write('Getting team info...')
 	# get_teams_info()
 	st.write('Getting current week...')
@@ -189,13 +204,14 @@ if go_button:
 		weekly_results_dict[week] = weekly_results
 
 	st.header('Starting Calculations...')
-	st.write('Calculating totals...')
-	scores_df = calculate_player_totals()
+	st.write('Calculating results from each game...')
+	scores_df = calculate_player_results()
+	player_totals = calc_player_totals()
+	teams_totals = calc_team_totals()
 	st.write('Calculations finished...')
 
 	st.subheader('Results')
 	st.write('Use the "View Fullscreen" buttons to the left of each table to expand your view')
-	player_totals = calc_player_totals()
 	st.subheader('Weekly Picks')
 	st.write(display_df.astype(str).T)
 	st.subheader('Weekly Points')
@@ -203,5 +219,4 @@ if go_button:
 	st.subheader('Player Totals')
 	st.write(player_totals.T)
 	st.subheader('Team Totals')
-	teams_totals = calc_team_totals()
 	st.write(teams_totals.T)
