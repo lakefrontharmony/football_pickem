@@ -189,29 +189,33 @@ load_form.write('Click the button below to see picks and weekly results')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
-	st.header('Prepping Calcs...')
-	st.write('Retrieving Player Picks...')
-	picks_dict = get_sheets_info()
-	# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
-	# st.write('Getting team info...')
-	# get_teams_info()
-	st.write('Getting current week...')
-	curr_week = get_week_num()
-	st.write('Getting weekly info...')
-	# Cycle through each week and find the winners from each game
-	for week in range(1, curr_week+1):
-		weekly_results = get_week_games(week)
-		weekly_results_dict[week] = weekly_results
+	with st.expander('Prepping Calcs...', expanded=True):
+		# st.header('Prepping Calcs...')
+		st.write('Retrieving Player Picks...')
+		picks_dict = get_sheets_info()
+		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
+		# st.write('Getting team info...')
+		# get_teams_info()
+		st.write('Getting current week...')
+		curr_week = get_week_num()
+		st.write('Getting weekly info...')
+		# Cycle through each week and find the winners from each game
+		for week in range(1, curr_week+1):
+			weekly_results = get_week_games(week)
+			weekly_results_dict[week] = weekly_results
+		st.write('Prep completed...')
 
-	st.header('Starting Calculations...')
-	st.write('Calculating results from each game...')
-	scores_df = calculate_player_results()
-	player_totals = calc_player_totals()
-	teams_totals = calc_team_totals()
-	st.write('Calculations finished...')
+		st.header('Starting Calculations...')
+		st.write('Calculating results from each game...')
+		scores_df = calculate_player_results()
+		st.write('Calculating player totals...')
+		player_totals = calc_player_totals()
+		st.write('Calculating team totals...')
+		teams_totals = calc_team_totals()
+		st.write('Calculations completed...')
 
 	st.subheader('Results')
-	st.write('Use the "View Fullscreen" buttons to the left of each table to expand your view')
+	st.write('Use the "View Fullscreen" buttons to the right of each table to expand your view')
 	st.subheader('Weekly Picks')
 	st.write(display_df.astype(str).T)
 	st.subheader('Weekly Points')
