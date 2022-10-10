@@ -178,8 +178,8 @@ def calc_team_totals() -> pd.DataFrame:
 	return return_df
 
 
-def calculate_streaks():
-	pass
+def calculate_streaks(in_results: pd.Series):
+	st.write(in_results)
 
 
 # TODO: Create ranking of players
@@ -224,12 +224,13 @@ if go_button:
 		scores_df = calculate_player_results()
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
-		st.write(scores_df)
+		for player in picks_dict['Name']:
+			calculate_streaks(player.loc[0:curr_week])
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
 
-	st.subheader('Results')
+	st.subheader(f'Results as of Week {curr_week}')
 	st.write('Use the "View Fullscreen" buttons to the right of each table to expand your view')
 	st.subheader('Weekly Picks')
 	st.write(display_df.astype(str).T)
