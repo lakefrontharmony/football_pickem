@@ -224,7 +224,7 @@ if go_button:
 		scores_df = calculate_player_results()
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
-		st.write(player_totals)
+		st.write(scores_df)
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
