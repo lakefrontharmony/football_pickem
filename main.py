@@ -185,8 +185,8 @@ def rank_players():
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
-		if player_df[player].iloc[:-1] == 1:
-			curr_win_streak = player_df['streak_counter'].iloc[:-1]
+		if player_df[player].iloc[-1:] == 1:
+			curr_win_streak = player_df['streak_counter'].iloc[-1:]
 		st.write(curr_win_streak)
 
 
