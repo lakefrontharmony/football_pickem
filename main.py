@@ -190,7 +190,7 @@ def rank_players():
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
 		player_dict = {'Player': player, 'Total Points': total_points,
 					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
-		return_rank_df = pd.concat([return_rank_df, player_dict])
+		return_rank_df.loc[len(return_rank_df.index)] = player_dict
 		st.write(return_rank_df)
 
 
