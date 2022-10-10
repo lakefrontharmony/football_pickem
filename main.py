@@ -225,7 +225,7 @@ if go_button:
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
 		for player in picks_df['Name']:
-			calculate_streaks(player_totals[player].iloc[0:int(curr_week)])
+			calculate_streaks(scores_df[player].iloc[0:int(curr_week)])
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
