@@ -23,6 +23,7 @@ weekly_results_dict = dict()
 picks_df = pd.DataFrame()
 scores_df = pd.DataFrame()
 display_df = pd.DataFrame()
+ranking_df = pd.DataFrame()
 today_date = datetime.today()
 
 
@@ -178,12 +179,21 @@ def calc_team_totals() -> pd.DataFrame:
 	return return_df
 
 
-def calculate_streaks(in_results: pd.Series, column_name: str):
+def rank_players():
+	working_rank_df = pd.DataFrame(columns=['Player', 'Longest Streak', 'Curr Win Streak'])
+	for player in picks_df['Name']:
+		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
+		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
+		print(max_streak)
+
+
+def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.DataFrame:
 	streaks = in_results.to_frame()
 	streaks['start_of_streak'] = streaks[column_name].ne(streaks[column_name].shift())
 	streaks['streak_id'] = streaks['start_of_streak'].cumsum()
 	streaks['streak_counter'] = streaks.groupby('streak_id').cumcount() + 1
 	st.write(streaks)
+	return pd.concat([in_results, streaks['streak_counter']], axis=1)
 
 
 # TODO: Create ranking of players
@@ -228,8 +238,7 @@ if go_button:
 		scores_df = calculate_player_results()
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
-		for player in picks_df['Name']:
-			calculate_streaks(scores_df[player].iloc[0:int(curr_week)], player)
+		rank_players()
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
