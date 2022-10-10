@@ -184,7 +184,7 @@ def rank_players():
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
-		print(max_streak)
+		st.write(max_streak)
 
 
 def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.DataFrame:
