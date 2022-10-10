@@ -181,6 +181,7 @@ def calc_team_totals() -> pd.DataFrame:
 def calculate_streaks(in_results: pd.Series, column_name: str):
 	streaks = in_results.to_frame()
 	streaks['start_of_streak'] = streaks[column_name].ne(streaks[column_name].shift())
+	streaks['streak_id'] = streaks['start_of_streak'].cumsum()
 	st.write(streaks)
 
 
