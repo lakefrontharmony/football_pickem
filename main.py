@@ -178,6 +178,20 @@ def calc_team_totals() -> pd.DataFrame:
 	return return_df
 
 
+def calculate_streaks():
+	pass
+
+
+# TODO: Create ranking of players
+# Criteria:
+# 1. Longest winning streak
+# 2. if still tied after #1, longest CURRENT winning streak
+# 3. If still tied after #2, rock/paper/scissors.
+# Create a new dataframe with score, longest streak, and current streak columns
+# (see https://joshdevlin.com/blog/calculate-streaks-in-pandas/ for calculating streaks.
+# Find the biggest number for the longest streak, and find the last number for the current streak.
+# Make sure streaks are for wins and not losses.)
+# Order the dataframe by score, then longest streak, then current streak.
 ###################################
 # Execution
 ###################################
@@ -210,6 +224,7 @@ if go_button:
 		scores_df = calculate_player_results()
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
+		st.write(player_totals)
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
