@@ -189,7 +189,7 @@ def rank_players():
 		if player_df[player].iloc[-1] == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
 		player_series = pd.Series([player, total_points, max_streak, curr_win_streak])
-		return_rank_df.append(player_series, ignore_index=True)
+		return_rank_df = pd.concat([return_rank_df, player_series], ignore_index=True)
 		st.write(return_rank_df)
 
 
