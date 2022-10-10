@@ -180,14 +180,17 @@ def calc_team_totals() -> pd.DataFrame:
 
 
 def rank_players():
-	return_rank_df = pd.DataFrame(columns=['Player', 'Longest Streak', 'Curr Win Streak'])
+	return_rank_df = pd.DataFrame(columns=['Player', 'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
+		total_points = player_df[player].sum()
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 		if player_df[player].iloc[-1] == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
-		st.write(curr_win_streak)
+		player_series = pd.Series([player, total_points, max_streak, curr_win_streak])
+		return_rank_df.append(player_series)
+		st.write(return_rank_df)
 
 
 def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.DataFrame:
