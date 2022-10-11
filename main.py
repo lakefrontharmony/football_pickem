@@ -24,6 +24,7 @@ picks_df = pd.DataFrame()
 scores_df = pd.DataFrame()
 display_df = pd.DataFrame()
 ranking_df = pd.DataFrame()
+has_curr_week_game_happened_for_player = pd.DataFrame()
 today_date = datetime.today()
 
 
@@ -134,6 +135,7 @@ def calculate_player_results() -> pd.DataFrame:
 	for player in picks_dict:
 		return_df[player] = 0
 		display_df[player] = " "
+		has_curr_week_game_happened_for_player[player] = False
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -141,6 +143,8 @@ def calculate_player_results() -> pd.DataFrame:
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
+					if week_num == curr_week:
+						has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
 						display_df.at[week_num-1, player] = f'{football_teams_dict[week_pick]} - WIN'
@@ -188,7 +192,11 @@ def rank_players() -> pd.DataFrame:
 		total_points = player_df[player].sum()
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
-		if player_df[player].iloc[-1] == 1:
+		final_game_result = player_df[player].iloc[-1]
+		if (has_curr_week_game_happened_for_player[player] is False) & (curr_week > 1):
+			final_game_result = player_df[player].iloc[-2]
+			st.write(f'skipped current week in streak calcs for player {player}')
+		if final_game_result == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
 		player_dict = {'Player': player, 'Total Points': total_points,
 					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
