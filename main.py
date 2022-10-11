@@ -186,7 +186,8 @@ def calc_team_totals() -> pd.DataFrame:
 
 
 def rank_players() -> pd.DataFrame:
-	return_rank_df = pd.DataFrame(columns=['Player', 'Total Points', 'Longest Streak', 'Curr Win Streak'])
+	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Total Points', 'Longest Streak', 'Curr Win Streak'])
+	entry_order = 1
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		total_points = player_df[player].sum()
@@ -198,11 +199,13 @@ def rank_players() -> pd.DataFrame:
 			st.write(f'skipped current week in streak calcs for player {player}')
 		if final_game_result == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
-		player_dict = {'Player': player, 'Total Points': total_points,
+		player_dict = {'Entry Order': entry_order, 'Player': player, 'Total Points': total_points,
 					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
+		entry_order += 1
 	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
 	 											ascending=[False, False, False], ignore_index=True)
+	return_rank_df.set_index(['Player'], inplace=True)
 	return return_rank_df
 
 
