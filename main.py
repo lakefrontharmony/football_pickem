@@ -179,7 +179,7 @@ def calc_team_totals() -> pd.DataFrame:
 	return return_df
 
 
-def rank_players():
+def rank_players() -> pd.DataFrame:
 	return_rank_df = pd.DataFrame(columns=['Player', 'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
@@ -193,7 +193,7 @@ def rank_players():
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
 	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
 												ascending=[False, False, False], ignore_index=True)
-	st.write(return_rank_df)
+	return return_rank_df
 
 
 def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.DataFrame:
@@ -246,7 +246,7 @@ if go_button:
 		scores_df = calculate_player_results()
 		st.write('Calculating player totals...')
 		player_totals = calc_player_totals()
-		rank_players()
+		ranking_df = rank_players()
 		st.write('Calculating team totals...')
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
@@ -257,7 +257,10 @@ if go_button:
 	st.write(display_df.astype(str).T)
 	st.subheader('Weekly Points')
 	st.write(scores_df.T)
-	st.subheader('Player Totals')
-	st.write(player_totals.T)
-	st.subheader('Team Totals')
-	st.write(teams_totals.T)
+	st.subheader('Player Ranking')
+	st.write(ranking_df)
+	with st.expander('Point Details', expanded=True):
+		st.subheader('Player Point Totals')
+		st.write(player_totals.T)
+		st.subheader('Team Totals')
+		st.write(teams_totals.T)
