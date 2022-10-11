@@ -201,8 +201,8 @@ def rank_players() -> pd.DataFrame:
 		player_dict = {'Player': player, 'Total Points': total_points,
 					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
-	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
-												ascending=[False, False, False], ignore_index=True)
+	# return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
+	# 											ascending=[False, False, False], ignore_index=True)
 	return return_rank_df
 
 
@@ -258,8 +258,6 @@ if go_button:
 	st.subheader('Player Ranking')
 	st.write(ranking_df)
 	st.subheader('Team Totals')
-	st.write(teams_totals.T.sort_values(by=[0], ascending=False))
+	st.write(teams_totals.T)
 	st.subheader('Weekly Points')
 	st.write(scores_df.T)
-	st.subheader('Player Point Totals')
-	st.write(player_totals.T.sort_values(by=[0], ascending=False))
