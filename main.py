@@ -247,10 +247,10 @@ if go_button:
 	st.write(display_df.astype(str).T)
 	st.subheader('Player Ranking')
 	st.write(ranking_df)
+	st.subheader('Team Totals')
+	st.write(teams_totals.T)
 	with st.expander('Point Details'):
 		st.subheader('Weekly Points')
 		st.write(scores_df.T)
 		st.subheader('Player Point Totals')
 		st.write(player_totals.T)
-		st.subheader('Team Totals')
-		st.write(teams_totals.T)
