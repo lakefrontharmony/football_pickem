@@ -125,6 +125,8 @@ def get_week_games(in_week_num: int) -> dict:
 
 
 # Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
+# TODO: Save the data for if the game has occurred or not so that future processing can determine
+#  whether to include the current week's data or not.
 def calculate_player_results() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	return_df['Week'] = range(1, 19)
@@ -249,8 +251,7 @@ if go_button:
 	st.write(ranking_df)
 	st.subheader('Team Totals')
 	st.write(teams_totals.T.sort_values(by=[0], ascending=False))
-	with st.expander('Point Details'):
-		st.subheader('Weekly Points')
-		st.write(scores_df.T)
-		st.subheader('Player Point Totals')
-		st.write(player_totals.T)
+	st.subheader('Weekly Points')
+	st.write(scores_df.T)
+	st.subheader('Player Point Totals')
+	st.write(player_totals.T.sort_values(by=[0], ascending=False))
