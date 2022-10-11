@@ -191,7 +191,9 @@ def rank_players():
 		player_dict = {'Player': player, 'Total Points': total_points,
 					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
-		st.write(return_rank_df)
+	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
+												ascending=[False, False, False], ignore_index=True)
+	st.write(return_rank_df)
 
 
 def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.DataFrame:
@@ -199,7 +201,6 @@ def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.Data
 	streaks['start_of_streak'] = streaks[column_name].ne(streaks[column_name].shift())
 	streaks['streak_id'] = streaks['start_of_streak'].cumsum()
 	streaks['streak_counter'] = streaks.groupby('streak_id').cumcount() + 1
-	st.write(streaks)
 	return pd.concat([in_results, streaks['streak_counter']], axis=1)
 
 
