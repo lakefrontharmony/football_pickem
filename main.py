@@ -255,11 +255,11 @@ if go_button:
 	st.write('Use the "View Fullscreen" buttons to the right of each table to expand your view')
 	st.subheader('Weekly Picks')
 	st.write(display_df.astype(str).T)
-	st.subheader('Weekly Points')
-	st.write(scores_df.T)
 	st.subheader('Player Ranking')
 	st.write(ranking_df)
 	with st.expander('Point Details', expanded=True):
+		st.subheader('Weekly Points')
+		st.write(scores_df.T)
 		st.subheader('Player Point Totals')
 		st.write(player_totals.T)
 		st.subheader('Team Totals')
