@@ -207,6 +207,8 @@ def rank_players() -> pd.DataFrame:
 	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
 	  											ascending=[False, False, False], ignore_index=True)
 	return_rank_df = calculate_rank_numbers(return_rank_df)
+	return_rank_df = return_rank_df.sort_values(by=['Entry Order'],
+												ascending=[True], ignore_index=True)
 	return_rank_df.set_index(['Player'], inplace=True)
 	return return_rank_df
 
@@ -230,11 +232,9 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 		if (player_entry['Total Points'] == saved_points) & (player_entry['Longest Streak'] == saved_long_streak) & \
 				(player_entry['Curr Win Streak'] == saved_curr_win_streak):
 			in_df.at[index, 'Rank'] = rank_number
-			st.write(f'matching entry for {player_entry}')
 		else:
 			in_df.at[index, 'Rank'] = row_number
 			rank_number = row_number
-			st.write(f'non-matching entry for {player_entry}')
 			saved_points = player_entry['Total Points']
 			saved_long_streak = player_entry['Longest Streak']
 			saved_curr_win_streak = player_entry['Curr Win Streak']
