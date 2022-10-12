@@ -197,10 +197,12 @@ def rank_players() -> pd.DataFrame:
 		st.write(f'{player} streaks table (current week:{curr_week})')
 		st.write(player_df)
 		if has_curr_week_game_happened_for_player.at[0, player] is True:
+			st.write('game has happened this week')
 			if player_df[player].iloc[-1] == 1:
 				curr_win_streak = player_df['streak_counter'].iloc[-1]
 				st.write(f'setting curr streak to last entry:{curr_win_streak}')
 		else:
+			st.write('game has not happened this week')
 			if curr_week > 1:
 				if player_df[player].iloc[-2] == 1:
 					curr_win_streak = player_df['streak_counter'].iloc[-2]
