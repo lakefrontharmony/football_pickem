@@ -125,9 +125,6 @@ def get_week_games(in_week_num: int) -> dict:
 	return results_dict
 
 
-# Cycle through each player, getting the score for each week. Return a dictionary of names and arrays of scores.
-# TODO: Save the data for if the game has occurred or not so that future processing can determine
-#  whether to include the current week's data or not.
 def calculate_player_results() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	return_df['Week'] = range(1, 19)
@@ -135,7 +132,7 @@ def calculate_player_results() -> pd.DataFrame:
 	for player in picks_dict:
 		return_df[player] = 0
 		display_df[player] = " "
-		has_curr_week_game_happened_for_player[player] = False
+		has_curr_week_game_happened_for_player[player] = True
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -144,6 +141,7 @@ def calculate_player_results() -> pd.DataFrame:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_num == curr_week:
+						st.write(f'setting that game has happend for {player}')
 						has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
@@ -197,7 +195,7 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 		final_game_result = player_df[player].iloc[-1]
-		if (has_curr_week_game_happened_for_player.at[0: player] is False) & (curr_week > 1):
+		if (has_curr_week_game_happened_for_player[player] is False) & (curr_week > 1):
 			final_game_result = player_df[player].iloc[-2]
 			st.write(f'skipped current week in streak calcs for player {player}')
 		if final_game_result == 1:
