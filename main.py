@@ -24,7 +24,7 @@ picks_df = pd.DataFrame()
 scores_df = pd.DataFrame()
 display_df = pd.DataFrame()
 ranking_df = pd.DataFrame()
-has_curr_week_game_happened_for_player = pd.DataFrame()
+has_curr_week_game_happened_for_player = pd.DataFrame
 today_date = datetime.today()
 
 
@@ -152,6 +152,8 @@ def calculate_player_results() -> pd.DataFrame:
 						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
 				else:
 					display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]}'
+	st.write('Game check dataframe after populating:')
+	st.write(has_curr_week_game_happened_for_player)
 	return return_df
 
 
