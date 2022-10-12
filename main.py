@@ -127,6 +127,7 @@ def get_week_games(in_week_num: int) -> dict:
 
 def calculate_player_results() -> pd.DataFrame:
 	return_df = pd.DataFrame()
+	has_curr_week_game_happened_for_player['Dummy'] = range(0, 1)
 	return_df['Week'] = range(1, 19)
 	display_df['Week'] = range(1, 19)
 	for player in picks_dict:
@@ -153,6 +154,7 @@ def calculate_player_results() -> pd.DataFrame:
 						display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]} - LOSS'
 				else:
 					display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]}'
+	has_curr_week_game_happened_for_player.drop(columns=['Dummy'], inplace=True)
 	st.write('Game check dataframe after populating:')
 	st.write(has_curr_week_game_happened_for_player)
 	return return_df
