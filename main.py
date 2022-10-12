@@ -269,8 +269,8 @@ if go_button:
 		# st.write('Getting team info...')
 		# get_teams_info()
 		st.write('Getting current week...')
-		# curr_week = get_week_num()
-		curr_week = 5
+		curr_week = get_week_num()
+		# curr_week = 5
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, curr_week+1):
