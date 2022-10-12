@@ -194,6 +194,8 @@ def rank_players() -> pd.DataFrame:
 	st.write(has_curr_week_game_happened_for_player)
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
+		st.write('Player Streaks table:')
+		st.write(player_df)
 		total_points = player_df[player].sum()
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
