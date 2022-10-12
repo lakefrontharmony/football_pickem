@@ -186,7 +186,7 @@ def calc_team_totals() -> pd.DataFrame:
 
 
 def rank_players() -> pd.DataFrame:
-	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Rank'
+	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Rank',
 										   'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	entry_order = 1
 	for player in picks_df['Name']:
