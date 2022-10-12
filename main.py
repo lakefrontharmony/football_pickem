@@ -186,7 +186,8 @@ def calc_team_totals() -> pd.DataFrame:
 
 
 def rank_players() -> pd.DataFrame:
-	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Total Points', 'Longest Streak', 'Curr Win Streak'])
+	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Rank'
+										   'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	entry_order = 1
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
@@ -199,12 +200,13 @@ def rank_players() -> pd.DataFrame:
 			st.write(f'skipped current week in streak calcs for player {player}')
 		if final_game_result == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
-		player_dict = {'Entry Order': entry_order, 'Player': player, 'Total Points': total_points,
-					   'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
+		player_dict = {'Entry Order': entry_order, 'Player': player, 'Rank': 1,
+					   'Total Points': total_points, 'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
 		entry_order += 1
 	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
 	 											ascending=[False, False, False], ignore_index=True)
+	return_rank_df = calculate_rank_numbers(return_rank_df)
 	return_rank_df.set_index(['Player'], inplace=True)
 	return return_rank_df
 
@@ -215,6 +217,27 @@ def calculate_streak_lengths(in_results: pd.Series, column_name: str) -> pd.Data
 	streaks['streak_id'] = streaks['start_of_streak'].cumsum()
 	streaks['streak_counter'] = streaks.groupby('streak_id').cumcount() + 1
 	return pd.concat([in_results, streaks['streak_counter']], axis=1)
+
+
+def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
+	return_df = in_df.copy()
+	rank_number = 1
+	row_number = 0
+	saved_points = 0
+	saved_long_streak = 0
+	saved_curr_win_streak = 0
+	for player_entry in return_df:
+		row_number += 1
+		if (player_entry['Total Points'] == saved_points) & (player_entry['Longest Streak'] == saved_long_streak) & \
+				(player_entry['Curr Win Streak'] == saved_curr_win_streak):
+			player_entry['Rank'] = rank_number
+		else:
+			player_entry['Rank'], rank_number = row_number
+			saved_points = player_entry['Total Points']
+			saved_long_streak = player_entry['Longest Streak']
+			saved_curr_win_streak = player_entry['Curr Win Streak']
+
+	return return_df
 
 
 ###################################
