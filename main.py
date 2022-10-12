@@ -138,12 +138,12 @@ def calculate_player_results() -> pd.DataFrame:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
 			# Verify that the pick has been entered for this week
+			st.write(f'checking {player} pick of {week_pick} which is of type {type(week_pick)}')
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					st.write(f'checking {week_num} against {curr_week} for {player}')
 					if week_num == curr_week:
-						st.write(f'Game has happened for {player} for week {week_num}')
 						has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
@@ -190,8 +190,6 @@ def rank_players() -> pd.DataFrame:
 	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Rank',
 										   'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	entry_order = 1
-	st.write('player week check table:')
-	st.write(has_curr_week_game_happened_for_player)
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		total_points = player_df[player].sum()
