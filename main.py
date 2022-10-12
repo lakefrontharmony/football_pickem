@@ -133,7 +133,7 @@ def calculate_player_results() -> pd.DataFrame:
 	for player in picks_dict:
 		return_df[player] = 0
 		display_df[player] = " "
-		has_curr_week_game_happened_for_player[player] = 0
+		has_curr_week_game_happened_for_player[player] = False
 		for week_num in weekly_results_dict:
 			week_results = weekly_results_dict[week_num]
 			week_pick = picks_dict[player][week_num-1]
@@ -144,7 +144,7 @@ def calculate_player_results() -> pd.DataFrame:
 					st.write(f'checking {week_num} against {curr_week} for {player}')
 					if week_num == curr_week:
 						st.write(f'Game has happened for {player} for week {week_num}')
-						has_curr_week_game_happened_for_player[player] = 1
+						has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
 						display_df.at[week_num-1, player] = f'{football_teams_dict[week_pick]} - WIN'
@@ -155,8 +155,6 @@ def calculate_player_results() -> pd.DataFrame:
 				else:
 					display_df.at[week_num - 1, player] = f'{football_teams_dict[week_pick]}'
 	has_curr_week_game_happened_for_player.drop(columns=['Dummy'], inplace=True)
-	st.write('Game check dataframe after populating:')
-	st.write(has_curr_week_game_happened_for_player)
 	return return_df
 
 
@@ -200,7 +198,7 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 		final_game_result = player_df[player].iloc[-1]
-		if (has_curr_week_game_happened_for_player.at[0, player] == 0) & (curr_week > 1):
+		if (has_curr_week_game_happened_for_player.at[0, player] is False) & (curr_week > 1):
 			final_game_result = player_df[player].iloc[-2]
 			st.write(f'skipped current week in streak calcs for player {player}')
 		if final_game_result == 1:
@@ -266,8 +264,8 @@ if go_button:
 		# st.write('Getting team info...')
 		# get_teams_info()
 		st.write('Getting current week...')
-		# curr_week = get_week_num()
-		curr_week = 5
+		curr_week = get_week_num()
+		# curr_week = 5
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, curr_week+1):
