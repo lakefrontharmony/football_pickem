@@ -194,6 +194,8 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 
+		st.write('Game happened checker table:')
+		st.write(has_curr_week_game_happened_for_player)
 		st.write(f'{player} streaks table (current week:{curr_week})')
 		st.write(player_df)
 		if has_curr_week_game_happened_for_player.at[0, player] is True:
