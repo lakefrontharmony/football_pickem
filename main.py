@@ -194,19 +194,13 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 
-		st.write(f'{player} streaks table (current week:{curr_week})')
-		st.write(player_df)
 		if has_curr_week_game_happened_for_player[player].values[0]:
-			st.write('game has happened this week')
 			if player_df[player].iloc[-1] == 1:
 				curr_win_streak = player_df['streak_counter'].iloc[-1]
-				st.write(f'setting curr streak to last entry:{curr_win_streak}')
 		else:
-			st.write('game has not happened this week')
 			if curr_week > 1:
 				if player_df[player].iloc[-2] == 1:
 					curr_win_streak = player_df['streak_counter'].iloc[-2]
-					st.write(f'Skipped back a week for {player}:{curr_win_streak}')
 
 		player_dict = {'Entry Order': entry_order, 'Player': player, 'Rank': 1,
 					   'Total Points': total_points, 'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
