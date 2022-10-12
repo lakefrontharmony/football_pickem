@@ -226,7 +226,7 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 	saved_points = 0
 	saved_long_streak = 0
 	saved_curr_win_streak = 0
-	for player_entry in return_df:
+	for index, player_entry in return_df.iterrows():
 		row_number += 1
 		if (player_entry['Total Points'] == saved_points) & (player_entry['Longest Streak'] == saved_long_streak) & \
 				(player_entry['Curr Win Streak'] == saved_curr_win_streak):
