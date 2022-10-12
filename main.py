@@ -24,7 +24,7 @@ picks_df = pd.DataFrame()
 scores_df = pd.DataFrame()
 display_df = pd.DataFrame()
 ranking_df = pd.DataFrame()
-has_curr_week_game_happened_for_player = pd.DataFrame
+has_curr_week_game_happened_for_player = pd.DataFrame()
 today_date = datetime.today()
 
 
