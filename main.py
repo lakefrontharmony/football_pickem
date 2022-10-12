@@ -230,12 +230,12 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 		row_number += 1
 		if (player_entry['Total Points'] == saved_points) & (player_entry['Longest Streak'] == saved_long_streak) & \
 				(player_entry['Curr Win Streak'] == saved_curr_win_streak):
-			st.write(f'matching entry for {player_entry["Player"]}')
 			player_entry['Rank'] = rank_number
+			st.write(f'matching entry for {player_entry}')
 		else:
-			st.write(f'non-matching entry for {player_entry["Player"]}')
 			player_entry['Rank'] = row_number
 			rank_number = row_number
+			st.write(f'non-matching entry for {player_entry}')
 			saved_points = player_entry['Total Points']
 			saved_long_streak = player_entry['Longest Streak']
 			saved_curr_win_streak = player_entry['Curr Win Streak']
