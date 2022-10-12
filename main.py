@@ -195,6 +195,8 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 		final_game_result = player_df[player].iloc[-1]
+		st.write(f'Checking if {player} has completed their game this week:'
+				 f'{has_curr_week_game_happened_for_player[player]} on week {curr_week}')
 		if (has_curr_week_game_happened_for_player[player] is False) & (curr_week > 1):
 			final_game_result = player_df[player].iloc[-2]
 			st.write(f'skipped current week in streak calcs for player {player}')
