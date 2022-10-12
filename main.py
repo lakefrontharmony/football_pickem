@@ -189,6 +189,8 @@ def rank_players() -> pd.DataFrame:
 	return_rank_df = pd.DataFrame(columns=['Entry Order', 'Player', 'Rank',
 										   'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	entry_order = 1
+	st.write('player week check table:')
+	st.write(has_curr_week_game_happened_for_player)
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		total_points = player_df[player].sum()
