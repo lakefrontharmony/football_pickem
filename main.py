@@ -202,7 +202,7 @@ def rank_players() -> pd.DataFrame:
 		final_game_result = player_df[player].iloc[-1]
 		st.write(f'Checking if {player} has completed their game this week:'
 				 f'{has_curr_week_game_happened_for_player[player]} on week {curr_week}')
-		if (has_curr_week_game_happened_for_player.at[0: player] == 0) & (curr_week > 1):
+		if (has_curr_week_game_happened_for_player.at[0, player] == 0) & (curr_week > 1):
 			final_game_result = player_df[player].iloc[-2]
 			st.write(f'skipped current week in streak calcs for player {player}')
 		if final_game_result == 1:
