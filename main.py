@@ -200,8 +200,6 @@ def rank_players() -> pd.DataFrame:
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 		final_game_result = player_df[player].iloc[-1]
-		st.write(f'Checking if {player} has completed their game this week:'
-				 f'{has_curr_week_game_happened_for_player[player]} on week {curr_week}')
 		if (has_curr_week_game_happened_for_player.at[0, player] == 0) & (curr_week > 1):
 			final_game_result = player_df[player].iloc[-2]
 			st.write(f'skipped current week in streak calcs for player {player}')
@@ -268,7 +266,8 @@ if go_button:
 		# st.write('Getting team info...')
 		# get_teams_info()
 		st.write('Getting current week...')
-		curr_week = get_week_num()
+		# curr_week = get_week_num()
+		curr_week = 5
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, curr_week+1):
