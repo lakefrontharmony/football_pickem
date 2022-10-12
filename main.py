@@ -205,7 +205,7 @@ def rank_players() -> pd.DataFrame:
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
 		entry_order += 1
 	return_rank_df = return_rank_df.sort_values(by=['Total Points', 'Longest Streak', 'Curr Win Streak'],
-	 											ascending=[False, False, False], ignore_index=True)
+	  											ascending=[False, False, False], ignore_index=True)
 	return_rank_df = calculate_rank_numbers(return_rank_df)
 	return_rank_df.set_index(['Player'], inplace=True)
 	return return_rank_df
