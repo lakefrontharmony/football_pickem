@@ -140,7 +140,6 @@ def calculate_player_results() -> pd.DataFrame:
 			# Verify that the pick has been entered for this week
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
-				st.write(f'checking {week_num} against {curr_week} for {player}')
 				if week_pick in week_results.keys():
 					if week_num == curr_week:
 						has_curr_week_game_happened_for_player[player] = True
@@ -194,7 +193,9 @@ def rank_players() -> pd.DataFrame:
 		total_points = player_df[player].sum()
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
-		st.write(f'{player} current week status:{has_curr_week_game_happened_for_player.at[0, player]}.')
+		if player_df[player].iloc[-1] == 1:
+			curr_win_streak = player_df['streak_counter'].iloc[-1]
+
 		if has_curr_week_game_happened_for_player.at[0, player] is False:
 			st.write(f'{player} streaks table (current week:{curr_week}:')
 			st.write(player_df)
@@ -202,8 +203,6 @@ def rank_players() -> pd.DataFrame:
 				if player_df[player].iloc[-2] == 1:
 					st.write(f'Skipped back a week for {player}')
 					curr_win_streak = player_df['streak_counter'].iloc[-2]
-		elif player_df[player].iloc[-1] == 1:
-			curr_win_streak = player_df['streak_counter'].iloc[-1]
 
 		player_dict = {'Entry Order': entry_order, 'Player': player, 'Rank': 1,
 					   'Total Points': total_points, 'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
