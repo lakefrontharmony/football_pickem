@@ -194,16 +194,20 @@ def rank_players() -> pd.DataFrame:
 	st.write(has_curr_week_game_happened_for_player)
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
-		st.write(f'{player} streaks table:')
-		st.write(player_df)
 		total_points = player_df[player].sum()
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
-		if (has_curr_week_game_happened_for_player.at[0, player] is False) & (curr_week > 1):
-			if player_df[player].iloc[-2] == 1:
-				curr_win_streak = player_df['streak_counter'].iloc[-2]
+
+		if has_curr_week_game_happened_for_player.at[0, player] is False:
+			st.write(f'{player} streaks table (current week:{curr_week}:')
+			st.write(player_df)
+			if curr_week > 1:
+				if player_df[player].iloc[-2] == 1:
+					st.write(f'Skipped back a week for {player}')
+					curr_win_streak = player_df['streak_counter'].iloc[-2]
 		elif player_df[player].iloc[-1] == 1:
 			curr_win_streak = player_df['streak_counter'].iloc[-1]
+
 		player_dict = {'Entry Order': entry_order, 'Player': player, 'Rank': 1,
 					   'Total Points': total_points, 'Longest Streak': max_streak, 'Curr Win Streak': curr_win_streak}
 		return_rank_df.loc[len(return_rank_df.index)] = player_dict
