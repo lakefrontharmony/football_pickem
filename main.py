@@ -140,6 +140,7 @@ def calculate_player_results() -> pd.DataFrame:
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
+					st.write(f'checking {week_num} against {curr_week}')
 					if week_num == curr_week:
 						st.write(f'Game has happened for {player} for week {week_num}')
 						has_curr_week_game_happened_for_player[player] = True
