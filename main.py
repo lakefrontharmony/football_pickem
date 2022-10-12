@@ -141,7 +141,7 @@ def calculate_player_results() -> pd.DataFrame:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
 					if week_num == curr_week-1:
-						st.write(f'setting that game has happened for {player}')
+						st.write(f'Game has happened for {player}')
 						has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
