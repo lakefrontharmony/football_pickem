@@ -182,6 +182,7 @@ def calc_team_totals() -> pd.DataFrame:
 		return_df[team] = return_df[team].astype(int)
 	# Drop the dummy columns
 	return_df.drop(columns=['Dummy'], inplace=True)
+	# Translate the table and add the entry order and rank columns.
 	return_df = return_df.T
 	return_df.rename(columns={0: 'Points'}, inplace=True)
 	return_df['Entry Order'] = range(0, len(return_df.index))
@@ -189,6 +190,7 @@ def calc_team_totals() -> pd.DataFrame:
 	return_df['Rank'] = range(1, len(return_df.index)+1)
 	return_df.sort_values(by=['Entry Order'], ascending=[True], ignore_index=True, inplace=True)
 	return_df = return_df[['Entry Order', 'Rank', 'Points']]
+	return_df.set_index(['Entry Order'], inplace=True)
 	st.write(return_df)
 	return return_df
 
