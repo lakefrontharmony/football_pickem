@@ -182,6 +182,8 @@ def calc_team_totals() -> pd.DataFrame:
 		return_df[team] = return_df[team].astype(int)
 	# Drop the dummy column
 	return_df.drop(columns=['Totals'], inplace=True)
+	return_df = return_df.T
+	st.write(return_df)
 	return return_df
 
 
@@ -286,7 +288,7 @@ if go_button:
 	st.subheader(f'Results as of Week {curr_week}')
 	st.write('Use the "View Fullscreen" buttons to the right of each table to expand your view')
 	st.subheader('Team Totals')
-	st.write(teams_totals.T)
+	st.write(teams_totals)
 	st.subheader('Player Ranking')
 	st.write(ranking_df)
 	st.subheader('Weekly Picks')
