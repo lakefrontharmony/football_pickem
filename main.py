@@ -183,7 +183,7 @@ def calc_team_totals() -> pd.DataFrame:
 	# Drop the dummy column
 	return_df.drop(columns=['Totals'], inplace=True)
 	return_df = return_df.T
-	return_df.rename(columns={'0': 'Points'}, inplace=True)
+	return_df.rename(columns={0: 'Points'}, inplace=True)
 	return_df.sort_values(by=['Points'], ascending=[False], ignore_index=True, inplace=True)
 	return_df['Rank'] = range(1, len(return_df.index))
 	st.write(return_df)
