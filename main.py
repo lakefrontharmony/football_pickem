@@ -173,19 +173,22 @@ def calc_player_totals() -> pd.DataFrame:
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	# This is a dummy column to force the shape of the Dataframe (brute force)
-	return_df['Totals'] = range(0, 1)
+	return_df['Dummy'] = range(0, 1)
 	for team in teams_dict:
 		team_total = 0
 		for team_player in teams_dict[team]:
 			team_total += scores_df[team_player].sum()
 		return_df.at[0, team] = team_total
 		return_df[team] = return_df[team].astype(int)
-	# Drop the dummy column
-	return_df.drop(columns=['Totals'], inplace=True)
+	# Drop the dummy columns
+	return_df.drop(columns=['Dummy'], inplace=True)
 	return_df = return_df.T
 	return_df.rename(columns={0: 'Points'}, inplace=True)
+	return_df['Entry Order'] = range(0, len(return_df.index))
 	return_df.sort_values(by=['Points'], ascending=[False], ignore_index=True, inplace=True)
-	return_df['Rank'] = range(1, len(return_df.index))
+	return_df['Rank'] = range(1, len(return_df.index)+1)
+	return_df.sort_values(by=['Entry Order'], ascending=[True], ignore_index=True, inplace=True)
+	return_df = return_df[['Entry Order', 'Rank', 'Points']]
 	st.write(return_df)
 	return return_df
 
