@@ -169,6 +169,7 @@ def calc_player_totals() -> pd.DataFrame:
 
 
 # Sum the totals for each team of players (not Football teams).
+# TODO: Add a rank column (but do not sort by rank)
 def calc_team_totals() -> pd.DataFrame:
 	return_df = pd.DataFrame()
 	# This is a dummy column to force the shape of the Dataframe (brute force)
