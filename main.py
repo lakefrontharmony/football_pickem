@@ -193,7 +193,6 @@ def calc_team_totals() -> pd.DataFrame:
 	return_df.sort_values(by=['Entry Order'], ascending=[True], ignore_index=True, inplace=True)
 	return_df = return_df[['Entry Order', 'Rank', 'Team Name', 'Points']]
 	return_df.set_index(['Entry Order'], inplace=True)
-	st.write(return_df)
 	return return_df
 
 
