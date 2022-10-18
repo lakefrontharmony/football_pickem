@@ -281,7 +281,7 @@ curr_week = get_week_num()
 # Get all teams uid and name and store in to team dictionary
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
-curr_week = load_form.selectbox('Pick a Week', options=range(1, curr_week+1), index=curr_week-1)
+curr_week = load_form.selectbox('Select A Week to View Results', options=range(1, curr_week+1), index=curr_week-1)
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
