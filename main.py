@@ -190,16 +190,16 @@ def calc_team_totals() -> pd.DataFrame:
 	return_df.sort_values(by=['Points'], ascending=[False], ignore_index=True, inplace=True)
 
 	return_df['Rank'] = range(1, len(return_df.index)+1)
-	rank = 1
+	rank_number = 1
 	row_number = 0
 	saved_points = 0
 	for index, team_entry in return_df.iterrows():
 		row_number += 1
 		if team_entry['Points'] == saved_points:
-			team_entry.at[index, 'Rank'] = rank
+			return_df.at[index, 'Rank'] = rank_number
 		else:
-			team_entry.at[index, 'Rank'] = row_number
-			rank = row_number
+			return_df.at[index, 'Rank'] = row_number
+			rank_number = row_number
 			saved_points = team_entry['Points']
 
 	return_df.sort_values(by=['Entry Order'], ascending=[True], ignore_index=True, inplace=True)
