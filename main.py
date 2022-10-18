@@ -188,7 +188,20 @@ def calc_team_totals() -> pd.DataFrame:
 	return_df.rename(columns={0: 'Points'}, inplace=True)
 	return_df['Entry Order'] = range(0, len(return_df.index))
 	return_df.sort_values(by=['Points'], ascending=[False], ignore_index=True, inplace=True)
+
 	return_df['Rank'] = range(1, len(return_df.index)+1)
+	rank = 1
+	row_number = 0
+	saved_points = 0
+	for index, team_entry in return_df.iterrows():
+		row_number += 1
+		if team_entry['Points'] == saved_points:
+			team_entry.at[index, 'Rank'] = rank
+		else:
+			team_entry.at[index, 'Rank'] = row_number
+			rank = row_number
+			saved_points = team_entry['Points']
+
 	return_df.sort_values(by=['Entry Order'], ascending=[True], ignore_index=True, inplace=True)
 	return_df = return_df[['Entry Order', 'Rank', 'Team Name', 'Points']]
 	return_df.set_index(['Entry Order'], inplace=True)
