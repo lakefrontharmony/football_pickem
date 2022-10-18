@@ -215,6 +215,9 @@ def rank_players() -> pd.DataFrame:
 	for player in picks_df['Name']:
 		player_df = calculate_streak_lengths(scores_df[player].iloc[0:int(curr_week)], player)
 		total_points = player_df[player].sum()
+		# TODO: This errored with an empty sequence when trying to load week 3 and below.
+		#  ValueError: max() arg is an empty sequence.
+		#  My hunch is that the players that had not yet won are breaking the ability to find any "win" matches.
 		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 
