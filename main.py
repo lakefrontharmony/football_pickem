@@ -218,7 +218,9 @@ def rank_players() -> pd.DataFrame:
 		# TODO: This errored with an empty sequence when trying to load week 3 and below.
 		#  ValueError: max() arg is an empty sequence.
 		#  My hunch is that the players that had not yet won are breaking the ability to find any "win" matches.
-		max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
+		max_streak = 0
+		if len(player_df['streak_counter'].loc[player_df[player] == 1]) > 0:
+			max_streak = max(player_df['streak_counter'].loc[player_df[player] == 1])
 		curr_win_streak = 0
 
 		if has_curr_week_game_happened_for_player[player].values[0]:
