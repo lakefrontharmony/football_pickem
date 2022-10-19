@@ -275,9 +275,9 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 ###################################
 st.title("Football Pick'em Tracker")
 
+# Find the current week of games
 curr_week = get_week_num()
 
-# Get all teams uid and name and store in to team dictionary
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
 curr_week = load_form.selectbox('Select A Week to View Results', options=range(1, curr_week+1), index=curr_week-1)
@@ -291,9 +291,6 @@ if go_button:
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
 		# st.write('Getting team info...')
 		# get_teams_info()
-		# st.write('Getting current week...')
-		# curr_week = get_week_num()
-		# curr_week = 5
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, curr_week+1):
@@ -312,7 +309,7 @@ if go_button:
 		st.write('Calculations completed...')
 
 	st.subheader(f'Results as of Week {curr_week}')
-	st.write('Use the "View Fullscreen" buttons to the right of each table to expand your view')
+	st.write('Use the "View Full Screen" buttons to the right of each table to expand your view')
 	st.subheader('Team Totals')
 	st.write(teams_totals)
 	st.subheader('Player Ranking')
