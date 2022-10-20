@@ -22,10 +22,19 @@ def find_matching_users(in_row: str):
 	v.teams_dict[in_row] = name_array
 
 
-# Get team info and player pick info from Google Sheets.
-def get_sheets_info() -> dict:
+# Input: Name of the player
+# Output: A PlayerObject populated with Name, Team, previous picks
+# Assumptions: v.picks_df is populated before calling this method
+def populate_player_object(in_player_name: str):
+	pass
+
+
+# Input: Google Sheet tab name
+# Output: picks_df populated with weekly picks tab data from Google Sheet.
+# Assumptions:
+def get_sheets_info(in_sheet_name: str) -> dict:
 	# Get football teams and create dictionary
-	football_teams_df = pd.read_csv(v.tracker_sheet_url + v.tracker_sheet_team_info_tab_name)
+	football_teams_df = pd.read_csv(v.tracker_sheet_url + in_sheet_name)
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
 	for uid in teams_temp_dict:
 		v.football_teams_dict[uid] = teams_temp_dict[uid][0]
@@ -83,6 +92,7 @@ go_button = player_form.form_submit_button(label='Get info')
 
 if go_button:
 	st.header('Info')
+	v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
 	st.write('Table with name, team, total points, longest streak, current streak')
 	st.header('This week')
 	st.write('Table with previous picks and win/loss')

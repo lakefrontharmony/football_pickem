@@ -22,9 +22,9 @@ def find_matching_users(in_row: str):
 
 
 # Get team info and player pick info from Google Sheets.
-def get_sheets_info() -> dict:
+def get_sheets_info(in_tab_name: str) -> dict:
 	# Get football teams and create dictionary
-	football_teams_df = pd.read_csv(v.tracker_sheet_url + v.tracker_sheet_team_info_tab_name)
+	football_teams_df = pd.read_csv(v.tracker_sheet_url + in_tab_name)
 	teams_temp_dict = football_teams_df.set_index('TeamUID').T.to_dict('list')
 	for uid in teams_temp_dict:
 		v.football_teams_dict[uid] = teams_temp_dict[uid][0]
@@ -269,7 +269,9 @@ if go_button:
 	with st.expander('DATA BUILD', expanded=True):
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
-		v.picks_dict = get_sheets_info()
+		v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
+		st.write('picks_dict:')
+		st.write(v.picks_dict)
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
 		# st.write('Getting team info...')
 		# get_teams_info()
