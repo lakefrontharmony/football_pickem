@@ -1,5 +1,13 @@
 import streamlit as st
 
+
+###################################
+# Functions
+###################################
+
+###################################
+# Execution
+###################################
 st.title('Team Information')
 st.header('Weekly Games')
 st.write('Table for each week')
