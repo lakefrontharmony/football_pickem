@@ -24,7 +24,7 @@ def find_matching_users(in_row: str):
 
 # Input: Name of the player
 # Output: A PlayerObject populated with Name, Team, previous picks
-# Assumptions: v.picks_df is populated before calling this method
+# Assumptions: v.picks_df is populated from Google Sheet, but not yet translated (from get_sheets_info)
 def populate_player_object(in_player_name: str):
 	pass
 
@@ -67,6 +67,11 @@ def get_sheets_info(in_sheet_name: str) -> dict:
 	team_names = v.picks_df['Team'].unique()
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
+	# Create Player Objects
+	player_names = v.picks_df['Name'].unique()
+	player_vector_function = np.vectorize(populate_player_object)
+	player_vector_function(player_names)
+
 	v.picks_df.drop(columns=['Team'], inplace=True)
 	return v.picks_df.set_index('Name').T.to_dict('list')
 

@@ -57,8 +57,8 @@ def get_sheets_info(in_tab_name: str) -> dict:
 	team_names = v.picks_df['Team'].unique()
 	vector_function = np.vectorize(find_matching_users)
 	vector_function(team_names)
-	v.picks_df.drop(columns=['Team'], inplace=True)
-	return v.picks_df.set_index('Name').T.to_dict('list')
+	return_df = v.picks_df.drop(columns=['Team'])
+	return return_df.set_index('Name').T.to_dict('list')
 
 
 # Retrieve Football team info from API
