@@ -7,6 +7,7 @@ import streamlit as st
 ###################################
 # Variables
 ###################################
+st.set_page_config(page_title='Stats')
 # Scoreboard link shows the real-time status of this week's games.
 # scoreboard_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard'
 team_list_url = 'https://sports.core.api.espn.com/v2/sports/football/leagues/nfl/seasons/2022/teams'
