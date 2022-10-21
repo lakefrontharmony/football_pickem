@@ -94,6 +94,7 @@ def get_week_games(in_week_num: int) -> dict:
 	week_num = str(in_week_num)
 	week_events_url = v.week_events_url_start + week_num + v.week_events_url_end
 	week_response = requests.get(week_events_url)
+	st.write(f'Response:{week_response}')
 	all_weeks = week_response.json()
 	for week in all_weeks['items']:
 		event_link = week['$ref']
