@@ -130,5 +130,6 @@ if go_button:
 	st.header('Info')
 	st.write(build_player_display(player))
 	st.header('This week')
-	st.write('Table with previous picks and win/loss')
+	st.write('Weekly Picks')
+	st.write(v.picks_df.loc[v.picks_df['Name'] == player])
 	st.write('Matchups for this week and who are the favorites')
