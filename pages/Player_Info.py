@@ -69,17 +69,19 @@ def get_sheets_info(in_sheet_name: str) -> dict:
 	v.picks_df['Week 17'] = picks_sheet['Week 17']
 	v.picks_df['Week 18'] = picks_sheet['Week 18']
 
-	# Create teams dictionary
-	team_names = v.picks_df['Team'].unique()
-	vector_function = np.vectorize(find_matching_users)
-	vector_function(team_names)
-
 	return_df = v.picks_df.drop(columns=['Team'])
 	return return_df.set_index('Name').T.to_dict('list')
 
 
+# Create teams dictionary
+def create_teams_dictionary():
+	team_names = v.picks_df['Team'].unique()
+	vector_function = np.vectorize(find_matching_users)
+	vector_function(team_names)
+
+
+# Create Player Objects
 def create_player_list():
-	# Create Player Objects
 	player_names = v.picks_df['Name'].unique()
 	player_vector_function = np.vectorize(populate_player_object)
 	player_vector_function(player_names)
@@ -100,14 +102,15 @@ st.title('Player Information')
 
 # Find the current week of games
 curr_week = get_week_num()
+v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
+create_teams_dictionary()
+create_player_list()
 player_form = st.form('Pick a Player')
-player = player_form.selectbox('Player:', options=['Bob', 'Sue'])
+player = player_form.selectbox('Player:', options=v.picks_df['Name'].unique())
 go_button = player_form.form_submit_button(label='Get info')
 
 if go_button:
 	st.header('Info')
-	v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
-	create_player_list()
 	st.write(players)
 	st.write('Table with name, team, total points, longest streak, current streak')
 	st.header('This week')
