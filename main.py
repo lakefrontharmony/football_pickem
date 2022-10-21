@@ -98,7 +98,7 @@ def get_week_games(in_week_num: int) -> dict:
 	for week in all_weeks['items']:
 		event_link = week['$ref']
 		event_response = requests.get(event_link)
-		st.write(f'Response:{event_response}')
+		st.write(f'Response:{event_response.json()}')
 		event_object = event_response.json()['competitions'][0]
 		event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
 		if event_datetime < v.today_date:
@@ -272,7 +272,6 @@ if go_button:
 		st.write('Retrieving Player Picks...')
 		v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
 		st.write('picks_dict:')
-		st.write(v.picks_dict)
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
 		# st.write('Getting team info...')
 		# get_teams_info()
