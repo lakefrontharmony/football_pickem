@@ -98,13 +98,16 @@ def get_week_games(in_week_num: int) -> dict:
 	for week in all_weeks['items']:
 		event_link = week['$ref']
 		event_response = requests.get(event_link)
-		st.write(f'Response:{event_response.status_code}')
-		event_object = event_response.json()['competitions'][0]
-		event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
-		if event_datetime < v.today_date:
-			if 'winner' in event_object['competitors'][0].keys():
-				results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
-				results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
+		if event_response.status_code == 200:
+			event_object = event_response.json()['competitions'][0]
+			event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
+			if event_datetime < v.today_date:
+				if 'winner' in event_object['competitors'][0].keys():
+					results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
+					results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
+		else:
+			st.write(f'Bad return in getting event info in week {week_num}. Code:{event_response.status_code}.'
+					 f'Reason:{event_response.reason}')
 	return results_dict
 
 
