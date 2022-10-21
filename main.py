@@ -106,9 +106,10 @@ def get_week_games(in_week_num: int) -> dict:
 					results_dict[event_object['competitors'][0]['uid']] = event_object['competitors'][0]['winner']
 					results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
 		else:
-			st.write(f'Error in week {week_num} event.')
+			st.subheader(f'*** ERROR IN WEEK {week_num} EVENT. ***')
 			st.write(f'Reason: "{event_response.text}".')
 			st.write(f'Problematic Link:{event_link}')
+			st.write(f'*** This event has been skipped ***')
 	return results_dict
 
 

@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
-import PlayerObject
+from PlayerObject import PlayerObject
 
 ###################################
 # Variables
@@ -22,11 +22,17 @@ def find_matching_users(in_row: str):
 	v.teams_dict[in_row] = name_array
 
 
-# Input: Name of the player
-# Output: A PlayerObject populated with Name, Team, previous picks
-# Assumptions: v.picks_df is populated from Google Sheet, but not yet translated (from get_sheets_info)
+# Input: Name of the player.
+# Output: Appended a PlayerObject to "players" list (populated with Name, Team, previous picks).
+# Assumptions: v.picks_df is populated from Google Sheet. curr_week has been populated.
 def populate_player_object(in_player_name: str):
-	pass
+	curr_player = PlayerObject(in_player_name)
+	curr_player.team = v.picks_df.at[in_player_name, 'Team']
+	for week_num in range(1, curr_week):
+		week_col_name = "Week " + str(week_num)
+		weekly_pick = v.picks_df.at[in_player_name, week_col_name]
+		curr_player.add_pick(week_num, weekly_pick)
+	players.append(curr_player)
 
 
 # Input: Google Sheet tab name
@@ -72,8 +78,8 @@ def get_sheets_info(in_sheet_name: str) -> dict:
 	player_vector_function = np.vectorize(populate_player_object)
 	player_vector_function(player_names)
 
-	v.picks_df.drop(columns=['Team'], inplace=True)
-	return v.picks_df.set_index('Name').T.to_dict('list')
+	return_df = v.picks_df.drop(columns=['Team'])
+	return return_df.set_index('Name').T.to_dict('list')
 
 
 # Lookup the current week number through API
