@@ -112,6 +112,17 @@ def build_player_display(in_name: str) -> pd.DataFrame:
 	return_df.reset_index(inplace=True, drop=True)
 	return return_df
 
+
+def build_weekly_pick_display(in_player_name: str) -> pd.DataFrame:
+	return_df = pd.DataFrame([['in_player_name']], columns=['Name'])
+	player_row = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
+	st.write(player_row.T)
+	# return_series = player_row.drop(labels=['Team'])
+	# for week_num in range(1, curr_week):
+	#
+	return return_df
+
+
 ###################################
 # Execution
 ###################################
@@ -131,5 +142,5 @@ if go_button:
 	st.write(build_player_display(player))
 	st.header('This week')
 	st.write('Weekly Picks')
-	st.write(v.picks_df.loc[v.picks_df['Name'] == player])
+	st.write(build_weekly_pick_display(player))
 	st.write('Matchups for this week and who are the favorites')
