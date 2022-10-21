@@ -30,7 +30,7 @@ def populate_player_object(in_player_name: str):
 	curr_player.team = player_row['Team']
 	for week_num in range(1, curr_week):
 		week_col_name = "Week " + str(week_num)
-		weekly_pick = v.picks_df.at[in_player_name, week_col_name]
+		weekly_pick = player_row[week_col_name]
 		curr_player.add_pick(week_num, weekly_pick)
 	players.append(curr_player)
 
