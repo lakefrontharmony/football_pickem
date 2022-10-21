@@ -107,7 +107,8 @@ def get_week_games(in_week_num: int) -> dict:
 					results_dict[event_object['competitors'][1]['uid']] = event_object['competitors'][1]['winner']
 		else:
 			st.write(f'Bad return in getting event info in week {week_num}. Code:{event_response.status_code}.'
-					 f'Reason:"{event_response.text}". Problematic Link:{event_link}')
+					 f'Reason:"{event_response.text}".')
+			st.write(f'Problematic Link:{event_link}')
 	return results_dict
 
 
@@ -274,7 +275,6 @@ if go_button:
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
-		st.write('picks_dict:')
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
 		# st.write('Getting team info...')
 		# get_teams_info()
