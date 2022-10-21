@@ -29,7 +29,7 @@ def populate_player_object(in_player_name: str):
 	player_row = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
 	curr_player.team = player_row['Team']
 	st.write(type(player_row))
-	st.write(player_row)
+	st.write(player_row['Team'])
 	for week_num in range(1, curr_week):
 		week_col_name = "Week " + str(week_num)
 		weekly_pick = player_row[week_col_name]
