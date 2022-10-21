@@ -16,18 +16,18 @@ players = []
 ###################################
 # Find teams in the picks_df which match the input string and add to the teams dictionary
 def find_matching_users(in_row: str):
-	team_mask = v.picks_df['Team'] == in_row
-	team_names = v.picks_df.loc[team_mask]
+	team_names = v.picks_df.loc[v.picks_df['Team'] == in_row]
 	name_array = team_names['Name'].to_numpy()
 	v.teams_dict[in_row] = name_array
 
 
 # Input: Name of the player.
-# Output: Appended a PlayerObject to "players" list (populated with Name, Team, previous picks).
-# Assumptions: v.picks_df is populated from Google Sheet. curr_week has been populated.
+# Output: Appended a PlayerObject to "players" list (populated with name, team, previous picks).
+# Assumptions: v.picks_df is populated from Google Sheet. curr_week variable has been populated.
 def populate_player_object(in_player_name: str):
 	curr_player = PlayerObject(in_player_name)
-	curr_player.team = v.picks_df.loc[in_player_name, 'Team']
+	player_row = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
+	curr_player.team = player_row['Team']
 	for week_num in range(1, curr_week):
 		week_col_name = "Week " + str(week_num)
 		weekly_pick = v.picks_df.at[in_player_name, week_col_name]
