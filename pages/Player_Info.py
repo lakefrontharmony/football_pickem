@@ -27,7 +27,7 @@ def find_matching_users(in_row: str):
 # Assumptions: v.picks_df is populated from Google Sheet. curr_week has been populated.
 def populate_player_object(in_player_name: str):
 	curr_player = PlayerObject(in_player_name)
-	curr_player.team = v.picks_df.at[in_player_name, 'Team']
+	curr_player.team = v.picks_df.loc[in_player_name, 'Team']
 	for week_num in range(1, curr_week):
 		week_col_name = "Week " + str(week_num)
 		weekly_pick = v.picks_df.at[in_player_name, week_col_name]
