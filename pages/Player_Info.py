@@ -109,7 +109,7 @@ def build_player_display(in_name: str) -> pd.DataFrame:
 												 'Value': str(player_object.longest_streak)}).to_frame().T])
 	return_df = pd.concat([return_df, pd.Series({'Item': 'Current Streak',
 												 'Value': str(player_object.current_streak)}).to_frame().T])
-	return_df.reset_index(inplace=True)
+	return_df.reset_index(inplace=True, drop=True)
 	return return_df
 
 ###################################
