@@ -98,11 +98,11 @@ def get_week_num() -> int:
 def build_player_display(in_name: str) -> pd.DataFrame:
 	return_df = pd.DataFrame(columns=['Item', 'Value'])
 	player_object: PlayerObject = players[in_name]
-	return_df.append(['Name', player_object.name], ignore_index=True)
-	return_df.append(['Team', player_object.team], ignore_index=True)
-	return_df.append(['Total Points', player_object.points], ignore_index=True)
-	return_df.append(['Longest Streak', player_object.longest_streak], ignore_index=True)
-	return_df.append(['Current Streak', player_object.current_streak], ignore_index=True)
+	return_df = return_df.append(['Name', player_object.name], ignore_index=True)
+	return_df = return_df.append(['Team', player_object.team], ignore_index=True)
+	return_df = return_df.append(['Total Points', player_object.points], ignore_index=True)
+	return_df = return_df.append(['Longest Streak', player_object.longest_streak], ignore_index=True)
+	return_df = return_df.append(['Current Streak', player_object.current_streak], ignore_index=True)
 	return_df.reset_index(inplace=True)
 	return return_df
 
