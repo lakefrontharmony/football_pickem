@@ -98,7 +98,7 @@ def get_week_games(in_week_num: int) -> dict:
 	for week in all_weeks['items']:
 		event_link = week['$ref']
 		event_response = requests.get(event_link)
-		st.write(f'Response:{event_response.json()}')
+		st.write(f'Response:{event_response.status_code}')
 		event_object = event_response.json()['competitions'][0]
 		event_datetime = datetime.strptime(event_object['date'], '%Y-%m-%dT%H:%MZ')
 		if event_datetime < v.today_date:
