@@ -98,13 +98,16 @@ def get_week_num() -> int:
 def build_player_display(in_name: str) -> pd.DataFrame:
 	return_df = pd.DataFrame(columns=['Item', 'Value'])
 	player_object: PlayerObject = players[in_name]
-	return_df = pd.concat([return_df, pd.Series({'Item': 'Name', 'Value': player_object.name}).to_frame()])
-	return_df = pd.concat([return_df, pd.Series({'Item': 'Team', 'Value': player_object.team}).to_frame()])
-	return_df = pd.concat([return_df, pd.Series({'Item': 'Total Points', 'Value': str(player_object.points)}).to_frame()])
+	return_df = pd.concat([return_df, pd.Series({'Item': 'Name',
+												 'Value': player_object.name}).to_frame().T])
+	return_df = pd.concat([return_df, pd.Series({'Item': 'Team',
+												 'Value': player_object.team}).to_frame().T])
+	return_df = pd.concat([return_df, pd.Series({'Item': 'Total Points',
+												 'Value': str(player_object.points)}).to_frame().T])
 	return_df = pd.concat([return_df, pd.Series({'Item': 'Longest Streak',
-												 'Value': str(player_object.longest_streak)}).to_frame()])
+												 'Value': str(player_object.longest_streak)}).to_frame().T])
 	return_df = pd.concat([return_df, pd.Series({'Item': 'Current Streak',
-												 'Value': str(player_object.current_streak)}).to_frame()])
+												 'Value': str(player_object.current_streak)}).to_frame().T])
 	# return_df.reset_index(inplace=True)
 	return return_df
 
