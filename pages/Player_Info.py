@@ -119,7 +119,7 @@ def build_weekly_pick_display(in_player_name: str) -> pd.DataFrame:
 	player_results = player_row.T.drop(labels=['Name', 'Team'])
 	player_results.rename(index={0: 'Picks'}, inplace=True)
 	st.write(player_results)
-	return_df['Picks'] = v.football_teams_dict[player_results['Picks']]
+	return_df = v.football_teams_dict[player_results['Picks']]
 	# return_series = player_row.drop(labels=['Team'])
 	# for week_num in range(1, curr_week):
 	#
