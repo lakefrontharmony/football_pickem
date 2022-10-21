@@ -8,7 +8,7 @@ from PlayerObject import PlayerObject
 # Variables
 ###################################
 import variables as v
-players = []
+players = {}
 
 
 ###################################
@@ -32,7 +32,7 @@ def populate_player_object(in_player_name: str):
 		week_col_name = "Week " + str(week_num)
 		weekly_pick = player_row[week_col_name]
 		curr_player.add_pick(week_num, weekly_pick)
-	players.append(curr_player)
+	players[in_player_name] = curr_player
 
 
 # Input: Google Sheet tab name
@@ -95,6 +95,17 @@ def get_week_num() -> int:
 	return week_num
 
 
+def build_player_display(in_name: str) -> pd.DataFrame:
+	return_df = pd.DataFrame(columns=['Item', 'Value'])
+	player_object: PlayerObject = players[in_name]
+	return_df.append(['Name', player_object.name], ignore_index=True)
+	return_df.append(['Team', player_object.team], ignore_index=True)
+	return_df.append(['Total Points', player_object.points], ignore_index=True)
+	return_df.append(['Longest Streak', player_object.longest_streak], ignore_index=True)
+	return_df.append(['Current Streak', player_object.current_streak], ignore_index=True)
+	return_df.reset_index(inplace=True)
+	return return_df
+
 ###################################
 # Execution
 ###################################
@@ -111,8 +122,7 @@ go_button = player_form.form_submit_button(label='Get info')
 
 if go_button:
 	st.header('Info')
-	st.write(players)
-	st.write('Table with name, team, total points, longest streak, current streak')
+	st.write(build_player_display(player))
 	st.header('This week')
 	st.write('Table with previous picks and win/loss')
 	st.write('Matchups for this week and who are the favorites')
