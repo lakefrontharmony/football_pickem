@@ -115,9 +115,9 @@ def build_player_display(in_name: str) -> pd.DataFrame:
 
 def build_weekly_pick_display(in_player_name: str) -> pd.DataFrame:
 	return_df = pd.DataFrame([[in_player_name]], columns=['Name'])
-	player_row = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
-	player_row.drop(labels=['Name', 'Team'])
-	st.write(player_row.T)
+	player_row: pd.Series = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
+	# player_row.drop(labels=['Name'])
+	st.write(player_row)
 	# return_series = player_row.drop(labels=['Team'])
 	# for week_num in range(1, curr_week):
 	#
