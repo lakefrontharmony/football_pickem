@@ -15,7 +15,7 @@ week_events_url_start = 'http://sports.core.api.espn.com/v2/sports/football/leag
 week_events_url_end = '/events?lang=en&region=us'
 tracker_sheet_url = 'https://docs.google.com/spreadsheets/d/1XLPDd43v4ASAIDB_IVI0TU6IQmdqiPuueII3Xp9rOFQ/gviz/tq?tqx=out:csv&sheet='
 tracker_sheet_team_info_tab_name = 'TeamInfo'
-tracker_sheet_weekly_picks_tab_name = 'WeeklyPicks'
+tracker_sheet_weekly_picks_tab_name = '-WeeklyPicks'
 football_teams_dict = dict()
 picks_dict = dict()
 teams_dict = dict()
@@ -47,7 +47,7 @@ def get_sheets_info(in_tab_name: str) -> dict:
 		football_teams_dict[uid] = teams_temp_dict[uid][0]
 
 	# Get player weekly picks info
-	picks_sheet = pd.read_csv(tracker_sheet_url + tracker_sheet_weekly_picks_tab_name)
+	picks_sheet = pd.read_csv(tracker_sheet_url + st.session_state['group'] + tracker_sheet_weekly_picks_tab_name)
 	# Had a random problem with the picks_sheet, so I brute-force converted it to picks_df
 	picks_df['Name'] = picks_sheet['Name']
 	picks_df['Team'] = picks_sheet['Team']
@@ -295,7 +295,7 @@ go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	with st.expander('DATA BUILD', expanded=True):
-		st.write(f'Gathering for {st.session_state["group"]}')
+		st.write(f'Gathering data for {st.session_state["group"]}')
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		picks_dict = get_sheets_info(tracker_sheet_team_info_tab_name)
