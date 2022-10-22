@@ -275,6 +275,7 @@ go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	with st.expander('DATA BUILD', expanded=True):
+		st.write(f'running with week: {st.session_state["week_num"]}')
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
