@@ -295,8 +295,8 @@ go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	with st.expander('DATA BUILD', expanded=True):
-		st.write(f'Gathering data for {st.session_state["group"]}')
 		st.header('Prepping Calcs...')
+		st.write(f'Gathering data for {st.session_state["group"]}')
 		st.write('Retrieving Player Picks...')
 		picks_dict = get_sheets_info(tracker_sheet_team_info_tab_name)
 		# Retrieve team info from API's (commented as this is less efficient than getting from Google Sheet)
