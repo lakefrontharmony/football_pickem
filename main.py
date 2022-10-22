@@ -264,6 +264,7 @@ st.title("Football Pick'em Tracker")
 
 # Find the current week of games
 if 'week_num' not in st.session_state:
+	st.write('resetting week_num')
 	st.session_state['week_num'] = get_week_num()
 
 load_form = st.form('Show Calculations')
@@ -275,7 +276,7 @@ go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	with st.expander('DATA BUILD', expanded=True):
-		st.write(f'running with week: {st.session_state["week_num"]}')
+		st.write(f'Running with week: {st.session_state["week_num"]}')
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
@@ -285,6 +286,7 @@ if go_button:
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, st.session_state['week_num']+1):
+			st.write(f'getting results from week {week}')
 			weekly_results = get_week_games(week)
 			v.weekly_results_dict[week] = weekly_results
 		st.write('Prep completed...')
