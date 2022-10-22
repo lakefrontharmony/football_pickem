@@ -282,12 +282,12 @@ st.title("Football Pick'em Tracker")
 # Find the current week of games
 if 'week_num' not in st.session_state:
 	st.write('resetting week_num')
-	st.session_state['week_num'] = get_week_num()
+	st.session_state['curr_week'] = get_week_num()
 
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
 st.session_state['week_num'] = load_form.selectbox('Select A Week to View Results',
-												   options=range(1, st.session_state['week_num']+1),
+												   options=range(1, st.session_state['curr_num']+1),
 												   index=st.session_state['week_num']-1)
 go_button = load_form.form_submit_button(label='Get info')
 
