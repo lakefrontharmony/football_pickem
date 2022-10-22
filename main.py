@@ -129,7 +129,7 @@ def calculate_player_results() -> pd.DataFrame:
 			if type(week_pick) == str:
 				# Verify that the results of the game for that week exist
 				if week_pick in week_results.keys():
-					if week_num == curr_week:
+					if week_num == st.session_state['week_num']:
 						v.has_curr_week_game_happened_for_player[player] = True
 					if week_results[week_pick] is True:
 						return_df.at[week_num-1, player] = 1
@@ -201,7 +201,7 @@ def rank_players() -> pd.DataFrame:
 										   'Total Points', 'Longest Streak', 'Curr Win Streak'])
 	entry_order = 1
 	for player in v.picks_df['Name']:
-		player_df = calculate_streak_lengths(v.scores_df[player].iloc[0:int(curr_week)], player)
+		player_df = calculate_streak_lengths(v.scores_df[player].iloc[0:int(st.session_state['week_num'])], player)
 		total_points = player_df[player].sum()
 		max_streak = 0
 		if len(player_df['streak_counter'].loc[player_df[player] == 1]) > 0:
@@ -212,7 +212,7 @@ def rank_players() -> pd.DataFrame:
 			if player_df[player].iloc[-1] == 1:
 				curr_win_streak = player_df['streak_counter'].iloc[-1]
 		else:
-			if curr_week > 1:
+			if st.session_state['week_num'] > 1:
 				if player_df[player].iloc[-2] == 1:
 					curr_win_streak = player_df['streak_counter'].iloc[-2]
 
@@ -254,7 +254,6 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 			saved_points = player_entry['Total Points']
 			saved_long_streak = player_entry['Longest Streak']
 			saved_curr_win_streak = player_entry['Curr Win Streak']
-
 	return in_df
 
 
@@ -264,11 +263,14 @@ def calculate_rank_numbers(in_df: pd.DataFrame) -> pd.DataFrame:
 st.title("Football Pick'em Tracker")
 
 # Find the current week of games
-curr_week = get_week_num()
+if 'week_num' not in st.session_state:
+	st.session_state['week_num'] = get_week_num()
 
 load_form = st.form('Show Calculations')
 load_form.write('Click the button below to see picks and weekly results')
-curr_week = load_form.selectbox('Select A Week to View Results', options=range(1, curr_week+1), index=curr_week-1)
+st.session_state['week_num'] = load_form.selectbox('Select A Week to View Results',
+												   options=range(1, st.session_state['week_num']+1),
+												   index=st.session_state['week_num']-1)
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
@@ -281,7 +283,7 @@ if go_button:
 		# get_teams_info()
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
-		for week in range(1, curr_week+1):
+		for week in range(1, st.session_state['week_num']+1):
 			weekly_results = get_week_games(week)
 			v.weekly_results_dict[week] = weekly_results
 		st.write('Prep completed...')
@@ -296,7 +298,7 @@ if go_button:
 		teams_totals = calc_team_totals()
 		st.write('Calculations completed...')
 
-	st.subheader(f'Results as of Week {curr_week}')
+	st.subheader(f'Results as of Week {st.session_state["week_num"]}')
 	st.write('Use the "View Full Screen" buttons to the right of each table to expand your view')
 	st.subheader('Team Totals')
 	st.write(teams_totals)

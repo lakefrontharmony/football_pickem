@@ -117,7 +117,6 @@ def build_weekly_pick_display(in_player_name: str) -> pd.DataFrame:
 	return_df = pd.DataFrame([[in_player_name]], columns=['Name'])
 	player_row: pd.Series = v.picks_df.loc[v.picks_df['Name'] == in_player_name]
 	player_results = player_row.T.drop(labels=['Name', 'Team'])
-	# player_results.rename(index={0: 'Picks'}, inplace=True)
 	st.write(player_results)
 	return_df['Picks'] = player_results[0].map(v.football_teams_dict)
 	# return_series = player_row.drop(labels=['Team'])
@@ -132,18 +131,18 @@ def build_weekly_pick_display(in_player_name: str) -> pd.DataFrame:
 st.title('Player Information')
 
 # Find the current week of games
-curr_week = get_week_num()
-v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
-create_teams_dictionary()
-create_player_list()
-player_form = st.form('Pick a Player')
-player = player_form.selectbox('Player:', options=v.picks_df['Name'].unique())
-go_button = player_form.form_submit_button(label='Get info')
+# curr_week = get_week_num()
+# v.picks_dict = get_sheets_info(v.tracker_sheet_team_info_tab_name)
+# create_teams_dictionary()
+# create_player_list()
+# player_form = st.form('Pick a Player')
+# player = player_form.selectbox('Player:', options=v.picks_df['Name'].unique())
+# go_button = player_form.form_submit_button(label='Get info')
 
-if go_button:
-	st.header('Info')
-	st.write(build_player_display(player))
-	st.header('This week')
-	st.write('Weekly Picks')
-	st.write(build_weekly_pick_display(player))
-	st.write('Matchups for this week and who are the favorites')
+# if go_button:
+#	st.header('Info')
+#	st.write(build_player_display(player))
+#	st.header('This week')
+#	st.write('Weekly Picks')
+#	st.write(build_weekly_pick_display(player))
+#	st.write('Matchups for this week and who are the favorites')
