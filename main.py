@@ -286,15 +286,16 @@ if 'week_num' not in st.session_state:
 	st.session_state['week_num'] = st.session_state['curr_week']
 
 load_form = st.form('Show Calculations')
-load_form.write('Click the button below to see picks and weekly results')
-st.session_state['week_num'] = load_form.selectbox('Select A Week to View Results',
+st.session_state['group'] = load_form.selectbox('Select a Group', options=['AFO', 'VIP'])
+st.session_state['week_num'] = load_form.selectbox('Select a Week to View Results',
 												   options=range(1, st.session_state['curr_week']+1),
 												   index=st.session_state['curr_week']-1)
+load_form.write('Click the button below to see picks and weekly results')
 go_button = load_form.form_submit_button(label='Get info')
 
 if go_button:
 	with st.expander('DATA BUILD', expanded=True):
-		st.write(f'Running with week: {st.session_state["week_num"]}')
+		st.write(f'Gathering for {st.session_state["group"]}')
 		st.header('Prepping Calcs...')
 		st.write('Retrieving Player Picks...')
 		picks_dict = get_sheets_info(tracker_sheet_team_info_tab_name)
@@ -304,7 +305,7 @@ if go_button:
 		st.write('Getting weekly info...')
 		# Cycle through each week and find the winners from each game
 		for week in range(1, st.session_state['week_num']+1):
-			st.write(f'getting results from week {week}')
+			st.write(f'Getting results from week {week}')
 			weekly_results = get_week_games(week)
 			weekly_results_dict[week] = weekly_results
 		st.write('Prep completed...')
