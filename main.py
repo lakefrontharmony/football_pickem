@@ -8,7 +8,7 @@ import streamlit as st
 # Variables
 ###################################
 import variables as v
-
+weekly_results_dict = dict()
 
 ###################################
 # Functions
@@ -122,8 +122,8 @@ def calculate_player_results() -> pd.DataFrame:
 		return_df[player] = 0
 		v.display_df[player] = " "
 		v.has_curr_week_game_happened_for_player[player] = False
-		for week_num in v.weekly_results_dict:
-			week_results = v.weekly_results_dict[week_num]
+		for week_num in weekly_results_dict:
+			week_results = weekly_results_dict[week_num]
 			week_pick = v.picks_dict[player][week_num-1]
 			# Verify that the pick has been entered for this week
 			if type(week_pick) == str:
@@ -288,7 +288,7 @@ if go_button:
 		for week in range(1, st.session_state['week_num']+1):
 			st.write(f'getting results from week {week}')
 			weekly_results = get_week_games(week)
-			v.weekly_results_dict[week] = weekly_results
+			weekly_results_dict[week] = weekly_results
 		st.write('Prep completed...')
 
 		st.header('Starting Calculations...')
