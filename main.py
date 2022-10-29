@@ -281,7 +281,6 @@ st.title("Football Pick'em Tracker")
 
 # Find the current week of games
 if 'week_num' not in st.session_state:
-	st.write('resetting week_num')
 	st.session_state['curr_week'] = get_week_num()
 	st.session_state['week_num'] = st.session_state['curr_week']
 
